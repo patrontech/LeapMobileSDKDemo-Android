@@ -2,6 +2,7 @@ package com.example.kibasdkpoc
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
@@ -14,7 +15,9 @@ public class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
-        enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+            enableEdgeToEdge()
+        }
 
         if (intent.data != null) {
             handleDeeplink(intent.data)

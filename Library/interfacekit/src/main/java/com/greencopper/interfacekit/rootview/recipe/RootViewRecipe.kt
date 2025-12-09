@@ -19,6 +19,6 @@ internal open class RootViewRecipe(
 
     override suspend fun tryToApply(contentDirectory: File) {
         val config = decode(contentDirectory.config().readText())
-        rootViewConfigurationHolder.tryEmit(config)
+        rootViewConfigurationHolder.tryEmit(config.removeTabBarData())
     }
 }
