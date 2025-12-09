@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/unregisteredAccountIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <com.greencopper.interfacekit.ui.views.LeapButton
+            android:id="@+id/unregisteredAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/unregisteredAccountIcon"
+            tools:text="Login to Account"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/unregisteredAccountDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/unregisteredAccountButton"
+            tools:text="Sign up for an account to participate in all event activities!"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

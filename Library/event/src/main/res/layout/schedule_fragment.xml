@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.greencopper.interfacekit.ui.views.navigationcontrols.KibaToolbar
+        android:id="@+id/scheduleListToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.greencopper.event.scheduleItem.ui.datepicker.DatePickerView
+        android:id="@+id/scheduleListDatePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/scheduleListToolbar"
+        />
+
+    <View
+        android:id="@+id/barSeparatorTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/scheduleListDatePicker"
+        />
+
+    <com.greencopper.interfacekit.filtering.filteringbar.ui.FilteringBar
+        android:id="@+id/scheduleListFilteringBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barSeparatorTop"
+        />
+
+    <View
+        android:id="@+id/barSeparatorBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/scheduleListFilteringBar"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scheduleTimeline"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barSeparatorBottom"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scheduleListRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:overScrollMode="never"
+        android:visibility="invisible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barSeparatorBottom"
+        tools:listitem="@layout/schedule_item_cell_layout"
+        />
+
+    <com.greencopper.interfacekit.empty.ui.EmptyView
+        android:id="@+id/scheduleEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barSeparatorBottom"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

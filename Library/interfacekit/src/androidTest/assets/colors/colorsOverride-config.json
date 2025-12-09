@@ -1,0 +1,225 @@
+{
+  "defaultTheme": {
+    "default": {
+      "statusBar": {
+        "light": "light",
+        "dark": "dark"
+      },
+      "accent": {
+        "primary": {
+          "light": "#CD7458FF",
+          "dark": "#CD7459FF"
+        },
+        "secondary": {
+          "light": "#6F45A4FF",
+          "dark": "#6F45A5FF"
+        }
+      },
+      "background": {
+        "primary": {
+          "light": "#FFFFFFFF",
+          "dark": "#000000FF"
+        },
+        "secondary": {
+          "light": "#FFFFFFFF",
+          "dark": "#272727FF"
+        }
+      },
+      "label": {
+        "primary": {
+          "light": "#000000FF",
+          "dark": "#FFFFFFFF"
+        },
+        "secondary": {
+          "light": "#000000FF",
+          "dark": "#FFFFFFFF"
+        },
+        "tertiary": {
+          "light": "#00000080",
+          "dark": "#FFFFFF80"
+        },
+        "quaternary": {
+          "light": "#000000FF",
+          "dark": "#FFFFFFFF"
+        },
+        "quinary": {
+          "light": "#000000FF",
+          "dark": "#FFFFFFFF"
+        },
+        "senary": {
+          "light": "#FFFFFFFF"
+        }
+      },
+      "fill": {
+        "primary": {
+          "light": "#00000040",
+          "dark": "#FFFFFF40"
+        },
+        "secondary": {
+          "light": "#0000001A",
+          "dark": "#FFFFFF1A"
+        },
+        "tertiary": {
+          "light": "#0000000D",
+          "dark": "#FFFFFF33"
+        },
+        "quaternary": {
+          "light": "#00000080",
+          "dark": "#FFFFFF80"
+        },
+        "quinary": {
+          "light": "#00000080",
+          "dark": "#FFFFFF80"
+        }
+      },
+      "result": {
+        "error": {
+          "dark": "#F46363FF",
+          "light": "#F46363FF"
+        },
+        "success": {
+          "dark": "#00DA8BFF",
+          "light": "#00DA8BFF"
+        }
+      },
+      "topBar": {
+        "background": {
+          "light": "#FFFFFFFF",
+          "dark": "#272727FF"
+        },
+        "title": {
+          "light": "#000000FF",
+          "dark": "#FFFFFFFF"
+        },
+        "item": {
+          "light": "#CD7458FF"
+        }
+      }
+    },
+    "override": {
+      "interfaceKit": {
+        "bottomBar": {
+          "background": {
+            "light": "#9c9c9cff"
+          },
+          "item": {
+            "selected": {
+              "dark": "#CF7459ff"
+            }
+          }
+        },
+        "sample": {
+          "statusBar": {
+            "light": "dark"
+          }
+        },
+        "result": {
+          "error": {
+            "dark": "#F46363FF",
+            "light": "#F46363FF"
+          },
+          "success": {
+            "dark": "#00DA8BFF",
+            "light": "#00DA8BFF"
+          }
+        },
+        "mainActionCardOnboardingPage": {
+          "background": {
+            "light": "#9c9c9cff"
+          },
+          "statusBar": {
+            "light": "light",
+            "dark": "light"
+          },
+          "card": {
+            "title": {
+              "light": "#272727FF",
+              "dark": "#FFFFFFFF"
+            },
+            "text": {
+              "light": "#FFFFFF33",
+              "dark": "#FFFFFFFF"
+            },
+            "button": {
+              "background": {
+                "light": "#000000FF",
+                "dark": "#FFFFFFFF"
+              },
+              "text": {
+                "light": "#FFFFFF33",
+                "dark": "#FFFFFFFF"
+              },
+              "border": {
+                "light": "#FFFFFF33",
+                "dark": "#FFFFFFFF"
+              }
+            },
+            "skip": {
+              "light": "#00000040",
+              "dark": "#FFFFFFFF"
+            }
+          }
+        },
+        "projectSwitcher": {
+          "title": {
+            "light": "9a9c9c"
+          },
+          "subtitle": {
+            "light": "9b9c9c"
+          },
+          "background": {
+            "light": "9c9c9c"
+          },
+          "statusBar": {
+            "light": "light",
+            "dark": "light"
+          },
+          "swipeIndicator": {
+            "light": "#454545FF",
+            "dark": "#FFFFFFFF"
+          },
+          "footerTopShadow": {
+            "light": "#565656FF",
+            "dark": "#FFFFFFFF"
+          },
+          "continueButton": {
+            "text": {
+              "light": "#272727FF",
+              "dark": "#FFFFFFFF"
+            },
+            "background": {
+              "light": "#FFFFFF33",
+              "dark": "#FFFFFFFF"
+            },
+            "border": {
+              "light": "#787878FF",
+              "dark": "#FFFFFFFF"
+            }
+          },
+          "project": {
+            "title": {
+              "light": "#00000340",
+              "dark": "#FFFFFFFF"
+            },
+            "subtitle": {
+              "light": "#00000440",
+              "dark": "#FFFFFFFF"
+            },
+            "background": {
+              "light": "#00000040",
+              "dark": "#FFFFFFFF"
+            },
+            "separator": {
+              "light": "#00000540",
+              "dark": "#FFFFFFFF"
+            },
+            "checkbox": {
+              "light": "#00000640",
+              "dark": "#FFFFFFFF"
+            }
+          }
+        }
+      }
+    }
+  }
+}

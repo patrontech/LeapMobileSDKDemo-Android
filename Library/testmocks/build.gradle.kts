@@ -1,0 +1,24 @@
+plugins {
+    alias(libs.plugins.conventions.kiba.library.basics)
+    alias(libs.plugins.conventions.kiba.library.uibasics)
+    alias(libs.plugins.conventions.mock.module)
+}
+
+android {
+    defaultConfig {
+        consumerProguardFiles("consumer-rules.pro", "coroutines.pro")
+    }
+    namespace = "com.greencopper.testmocks"
+}
+
+dependencies {
+    implementation(project(LibraryLibs.kibaToolkit))
+    implementation(project(LibraryLibs.kibaCore))
+    implementation(project(LibraryLibs.kibaInterfaceKit))
+
+    implementation(libs.komposable)
+    implementation(libs.test.komposable)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofitSerializationConverter)
+}

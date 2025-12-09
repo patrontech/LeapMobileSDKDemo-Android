@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clLocationDetailBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.greencopper.interfacekit.ui.views.navigationcontrols.KibaToolbar
+        android:id="@+id/simpleToolbarLocationDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:elevation="8dp"
+        />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ablLocationDetailHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvLocationDetailName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/locationDetailFavoriteAddRemove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="80dp"
+                tools:text="Location Detail Name"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvLocationDetailSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingBottom="8dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/locationDetailFavoriteAddRemove"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocationDetailName"
+                tools:text="Subtitle"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/locationDetailFavoriteAddRemove"
+                android:layout_width="@dimen/tappable_icon_size"
+                android:layout_height="@dimen/tappable_icon_size"
+                android:padding="@dimen/tappable_icon_padding"
+                android:layout_marginEnd="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvLocationDetailName"
+                tools:src="@drawable/radiobutton_checked"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvLocationDetailContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:id="@+id/vLocationDetailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    >
+
+                    <ImageView
+                        android:id="@+id/ivLocationDetailAddressIcon"
+                        android:layout_width="14dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_address"
+                        />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLocationDetailAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp"
+                        tools:text="Location Address"
+                        />
+
+                </LinearLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivLocationDetailImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:adjustViewBounds="true"
+                    android:padding="2dp"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CornerSize10Dp"
+                    app:strokeWidth="1dp"
+                    />
+
+                <com.greencopper.interfacekit.tags.ui.TagDisplayView
+                    android:id="@+id/tagDisplayLocationDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvLocationDetailDescriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvLocationDetailDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:textSize="14sp"
+                    tools:text="@tools:sample/lorem/random"
+                    />
+            </LinearLayout>
+
+            <com.greencopper.interfacekit.widgets.ui.widgetcollection.integration.WidgetCollectionView
+                android:id="@+id/wcvLocationDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

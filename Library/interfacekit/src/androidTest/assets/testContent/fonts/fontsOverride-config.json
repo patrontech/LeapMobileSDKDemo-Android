@@ -1,0 +1,50 @@
+{
+  "themes": {
+    "defaultTheme": {
+      "default": {
+        "largeTitle": { "fonts": [{ "name": "inter_bold"}] },
+        "title": {
+          "xl": { "fonts": [{ "name": "title_xl_1"}] },
+          "l": { "fonts": [{ "name": "title_l_1"}] },
+          "m": { "fonts": [{ "name": "title_m_1"}] },
+          "s": { "fonts": [{ "name": "title_s_1"}] },
+          "xs": {
+            "fonts": [
+              {
+                "name": "fakeFont"
+              }
+            ]
+          }
+        },
+        "headline": {
+          "l": { "fonts": [{ "name": "headline_l_1"}] },
+          "m": { "fonts": [{ "name": "headline_m_1"}] },
+          "s": { "fonts": [{ "name": "headline_s_1"}] }
+        },
+        "body": {
+          "xl": { "fonts": [{ "name": "body_xl_1"}] },
+          "l": { "fonts": [{ "name": "body_l_1"}] },
+          "m": { "fonts": [{ "name": "body_m_1"}] },
+          "s": { "fonts": [{ "name": "body_s_1"}] },
+          "xs": { "fonts": [{ "name": "body_xs_1"}] }
+        },
+        "caption": {
+          "l": { "fonts": [{ "name": "caption_l_1"}] },
+          "s": { "fonts": [{ "name": "caption_s_1"}] }
+        },
+        "footnote": {
+          "m": { "fonts": [{ "name": "footnote_m_1"}] },
+          "s": { "fonts": [{ "name": "footnote_s_1"}] }
+        }
+      },
+      "override": {
+        "interfaceKit": {
+          "sample": {
+            "text": { "fonts": [{ "name": "MuseoModernoRoman-Regular"}] },
+            "largeTitle": { "fonts": [{ "name": "GrandstanderRoman-Black"}, { "name": "Bonjour"}] }
+          }
+        }
+      }
+    }
+  }
+}

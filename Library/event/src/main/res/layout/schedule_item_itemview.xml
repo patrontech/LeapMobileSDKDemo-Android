@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:layout_width="300dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/scheduleItemIv"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginVertical="3dp"
+        android:src="@drawable/ic_schedule_item_calendar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/scheduleItemTvDayOfEvent"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/scheduleItemTvDayOfEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintStart_toEndOf="@id/scheduleItemIv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scheduleItemTvTimeOfEvent"
+        tools:text="Fri, May 14, 2021" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/scheduleItemTvTimeOfEvent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@id/scheduleItemAddRemove"
+        app:layout_constraintStart_toEndOf="@id/scheduleItemIv"
+        app:layout_constraintTop_toBottomOf="@id/scheduleItemTvDayOfEvent"
+        app:layout_constraintBottom_toTopOf="@id/scheduleItemStage"
+        tools:text="4:00 PM - 7:00 PM" />
+
+    <include
+        android:id="@+id/scheduleItemStage"
+        layout="@layout/schedule_item_stage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scheduleItemTvTimeOfEvent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/scheduleItemAddRemove"
+        android:layout_width="@dimen/tappable_icon_size"
+        android:layout_height="@dimen/tappable_icon_size"
+        android:padding="@dimen/tappable_icon_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/scheduleItemTvTimeOfEvent"
+        tools:src="@drawable/ic_schedule_item_calendar"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

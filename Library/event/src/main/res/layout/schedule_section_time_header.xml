@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <View
+        android:id="@+id/bullet"
+        android:layout_width="10dp"
+        android:layout_height="4dp"
+        android:background="@color/design_default_color_on_secondary"
+        bind:layout_constraintBottom_toBottomOf="parent"
+        bind:layout_constraintStart_toStartOf="parent"
+        bind:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        bind:layout_constraintBottom_toBottomOf="parent"
+        bind:layout_constraintStart_toEndOf="@id/bullet"
+        bind:layout_constraintTop_toTopOf="parent"
+        tools:text="test time"
+        />
+
+    <View
+        android:id="@+id/dash"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/dotted_line"
+        bind:layout_constraintBottom_toBottomOf="parent"
+        bind:layout_constraintEnd_toEndOf="parent"
+        bind:layout_constraintStart_toEndOf="@id/time"
+        bind:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

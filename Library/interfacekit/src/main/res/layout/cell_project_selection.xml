@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backgroundProjectSelection"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="24dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeWidth="1dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProjectSelection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                tools:background="@android:color/black"
+                />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProjectSelectionTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvProjectSelectionSubtitle"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintEnd_toStartOf="@id/vProjectSelectionSeparator"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="NFL Draft"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProjectSelectionSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tvProjectSelectionTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintEnd_toStartOf="@id/vProjectSelectionSeparator"
+            tools:text="Cleveland"/>
+
+        <View
+            android:id="@+id/vProjectSelectionSeparator"
+            android:layout_width=".5dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivProjectSelectionChecked"
+            tools:background="@android:color/darker_gray"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProjectSelectionChecked"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/radiobutton_checked"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

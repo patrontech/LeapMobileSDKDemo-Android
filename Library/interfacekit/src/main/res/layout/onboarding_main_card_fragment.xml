@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.greencopper.interfacekit.ui.views.navigationcontrols.KibaToolbar
+        android:id="@+id/onboardingToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/onboarding_main_card_image_full_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/onboardingToolbar"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onboarding_main_card_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_corners"
+        android:elevation="8dp"
+        android:paddingBottom="16dp"
+        app:layout_constrainedHeight="true"
+        android:layout_marginTop="?actionBarSize"
+        app:layout_goneMarginTop="?actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboardingToolbar"
+        app:layout_constraintVertical_bias="1"
+        >
+
+        <com.greencopper.interfacekit.ui.views.DotsIndicatorView
+            android:id="@+id/onboarding_main_card_dots_indicator_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constrainedHeight="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_container"
+            app:layout_constraintVertical_bias="0"
+            />
+
+        <ScrollView
+            android:id="@+id/text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:fillViewport="true"
+            android:layout_marginTop="16dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboarding_main_card_dots_indicator_view"
+            app:layout_constraintBottom_toTopOf="@id/onboarding_main_card_primary_action_btn"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/onboarding_main_card_title_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    tools:text="Label Title"
+                    />
+
+                <TextView
+                    android:id="@+id/onboarding_main_card_description_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:overScrollMode="always"
+                    tools:text="Label Text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.greencopper.interfacekit.ui.views.LeapButton
+            android:id="@+id/onboarding_main_card_primary_action_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/onboarding_main_card_secondary_action_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_container"
+            tools:background="@android:color/holo_blue_dark"
+            tools:text="Label Button"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/onboarding_main_card_secondary_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="24dp"
+            android:layout_marginVertical="18dp"
+            android:textAllCaps="false"
+            android:background="@null"
+            android:drawableEnd="@drawable/ic_skip"
+            android:drawablePadding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/onboarding_main_card_primary_action_btn"
+            tools:text="Skip"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interfaceKit__push_error__message">Can\'t push from the TabBar</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/schedule_item_card"
+    android:outlineProvider="none"
+    android:layout_width="288dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="4dp"
+    app:strokeColor="@color/divider_color"
+    app:strokeWidth="1dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/schedule_item_cardview_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/horizontal_margin"
+        android:paddingEnd="12dp"
+        android:paddingVertical="@dimen/vertical_margin"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/schedule_item_cardview_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Title cell"
+            />
+
+        <include
+            android:id="@+id/schedule_item_itemview"
+            layout="@layout/schedule_item_itemview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

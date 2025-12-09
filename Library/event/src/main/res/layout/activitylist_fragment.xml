@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.greencopper.interfacekit.ui.views.navigationcontrols.KibaToolbar
+        android:id="@+id/activityListToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <View
+        android:id="@+id/activityListFilteringBarBorderTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/activityListToolbar"
+        />
+
+    <com.greencopper.interfacekit.filtering.filteringbar.ui.FilteringBar
+        android:id="@+id/activityListFilteringBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/activityListFilteringBarBorderTop"
+        />
+
+    <View
+        android:id="@+id/activityListFilteringBarBorderBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/activityListFilteringBar"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activityListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityListFilteringBarBorderBottom"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/activityListEmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:constraint_referenced_ids="activityListEmptyViewTitle, activityListEmptyViewSubtitle, activityListEmptyViewImage"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/activityListEmptyViewImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/activityListEmptyViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:gravity="center"
+        android:paddingTop="38dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityListEmptyViewImage"
+        tools:text="No Favorites"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/activityListEmptyViewSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/activityListEmptyViewTitle"
+        app:layout_constraintStart_toStartOf="@+id/activityListEmptyViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/activityListEmptyViewTitle"
+        tools:text="Your favorites will show up here!"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

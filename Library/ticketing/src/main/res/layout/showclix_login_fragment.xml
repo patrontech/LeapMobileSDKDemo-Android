@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.greencopper.interfacekit.ui.views.navigationcontrols.KibaToolbar
+        android:id="@+id/showclixToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_main_image"
+                android:layout_width="wrap_content"
+                android:layout_height="205dp"
+                android:layout_marginTop="48dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_main_image"
+                tools:text="Retrieve Your Tickets!"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:text="Enter your e-mail to connect your tickets"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="24dp"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_info"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="0dp"
+                    android:background="@drawable/cornered_bordered_background"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:hint="@string/email_hint"
+                    tools:hint="E-mail"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_email_sent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@id/leapbutton_cta"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+                tools:text="thisemail@mail.com"
+                />
+
+            <com.greencopper.interfacekit.ui.views.LeapButton
+                android:id="@+id/leapbutton_cta"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="24dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_email"
+                tools:text="Get Link"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_change_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leapbutton_cta"
+                tools:text="Change your email"
+                />
+
+            <ProgressBar
+                android:id="@+id/progress_loader"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:indeterminate="true"
+                android:indeterminateOnly="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

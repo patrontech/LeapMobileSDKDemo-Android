@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_margin">24dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="button_corner_radius">48dp</dimen>
+    <dimen name="button_height">58dp</dimen>
+
+    <dimen name="datepickerbutton_width">78dp</dimen>
+    <dimen name="datepickerbutton_horizontal_margin">8dp</dimen>
+
+    <!-- Timeline dimensions -->
+    <dimen name="timeline_hourline_height">32dp</dimen>
+    <dimen name="timeline_arrow_cursor_width">16dp</dimen>
+
+    <dimen name="schedule_timeline_hour_vertical_margin">8dp</dimen>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/timelineItemBorder">
+        <shape android:shape="rectangle">
+            <gradient
+                android:endColor="#D62D20"
+                android:startColor="#1100e6"
+                android:type="linear" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+
+    <item
+        android:id="@+id/timelineItemBackground"
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:endColor="#8E1E80"
+                android:startColor="#BFC403"
+                android:type="linear" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+
+</layer-list>

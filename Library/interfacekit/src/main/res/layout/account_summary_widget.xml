@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/accountSummaryIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="#FF0000"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/accountSummaryInitials"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/accountSummaryIcon"
+            app:layout_constraintEnd_toEndOf="@+id/accountSummaryIcon"
+            app:layout_constraintStart_toStartOf="@+id/accountSummaryIcon"
+            app:layout_constraintTop_toTopOf="@+id/accountSummaryIcon"
+            tools:text="AS"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/accountSummaryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/accountSummaryIcon"
+            tools:text="Alex Smith"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/accountSummarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/accountSummaryTitle"
+            tools:text="alex.smith@fakeemail.com"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/accountSummaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/accountSummarySubtitle"
+            app:rippleColor="@null"
+            tools:text="View Profile"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_container"
+    android:background="@drawable/bottom_sheet_rounded_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:layoutDescription="@xml/filter_selector_scene"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/swipe_indicator"
+        android:layout_width="@dimen/width_swipe_indicator"
+        android:layout_height="@dimen/height_swipe_indicator"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_top_swipe_indicator"
+        android:src="@drawable/draggable_cursor_shape"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/options_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/filter_option_recycler_item"
+        tools:itemCount="3"
+        />
+
+        <LinearLayout
+            android:id="@+id/bottom_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="16dp"
+            android:orientation="vertical"
+            >
+
+            <com.greencopper.interfacekit.ui.views.LeapButton
+                android:id="@+id/done_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="18dp"
+                tools:backgroundTint="#FCC"
+                tools:text="Done" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/clear_all_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                tools:text="Clear All"
+                tools:textColor="#000" />
+        </LinearLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

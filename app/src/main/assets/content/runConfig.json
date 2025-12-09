@@ -1,0 +1,42 @@
+{
+"content": {
+"fileName": "content_v617.zip",
+"secret": "319b35e9f992438ba02b29ca1821061a",
+"schema": 1,
+"version": 617,
+"project": "jennakibo-2021",
+"deprecatedProjects": [
+"advancedmaps-2022",
+"allantest-2024",
+"allantest-2024_1",
+"animefrontierpreprod-2024",
+"apprevampqa-2021",
+"apprevampqa-2024",
+"apprevampqa-2025",
+"apprevampqa01-2025",
+"apprevampqatest-2021",
+"apptest-2025_2",
+"growtixv2wrapper-2023",
+"jennakibo-2023",
+"myschedule-2022",
+"nhtestcopyproject-2025",
+"nhtestcopywidget-2025",
+"nhtestdisablethuzi-2024",
+"nhtestrevamp-2025",
+"nhtestwidget-2025",
+"nhtestwidgetcopy-2024",
+"nhtestwidgetcopynew-2025",
+"norwegian-2024",
+"projectedition-2022",
+"projecteditioncontentnew-2023",
+"tdcoliseumpreprod-2026",
+"testdarkmodetoogle-2022",
+"testlanguagechange-2023",
+"testlocateaccount-2024",
+"testprojectedition-2022",
+"testrevampqa-2001",
+"vigiang06test-2024",
+"vigiangtest-2023"
+]
+}
+}

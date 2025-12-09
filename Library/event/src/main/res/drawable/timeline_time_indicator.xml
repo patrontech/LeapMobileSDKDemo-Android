@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/timeline_arrow_cursor_width"
+    android:height="@dimen/timeline_hourline_height"
+    android:viewportWidth="16"
+    android:viewportHeight="32"
+    >
+
+    <path
+        android:fillColor="#000"
+        android:pathData="M0,0 L16,0 L9,9 L9,32 L7,32 L7,9 z"
+        />
+
+</vector>

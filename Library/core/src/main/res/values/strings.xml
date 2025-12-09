@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This is used to automatically resolve the key to be used for a quantity
+    English does NOT acknowledge the use of 0 quantity as the grammar is the same as other
+    See: https://developer.android.com/guide/topics/resources/string-resource.html#Plurals -->
+    <plurals name="plural_key_resolver">
+        <item quantity="zero">zero</item>
+        <item quantity="one">one</item>
+        <item quantity="two">two</item>
+        <item quantity="few">few</item>
+        <item quantity="many">many</item>
+        <item quantity="other">other</item>
+    </plurals>
+</resources>

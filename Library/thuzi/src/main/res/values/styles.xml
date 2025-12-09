@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RoundedCornersDialog" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/top_rounded_corners</item>
+    </style>
+
+    <style name="SlidingDialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.CornerSize8Dp" parent="">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="FanScanQRCamText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

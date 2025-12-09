@@ -1,0 +1,13 @@
+{
+  "ota": {
+    "apiUrl": "fakeUrl"
+  },
+  "remoteState": {
+    "apiUrl": "fakeUrl",
+    "threshold": 20
+  },
+  "content": {
+    "expiration": 5184000,
+    "deprecatedProjects": []
+  }
+}

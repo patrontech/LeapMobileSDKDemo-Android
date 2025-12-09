@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.LinearLayout"
+    >
+
+    <HorizontalScrollView
+        android:id="@+id/filtering_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/filtering_bar_horizontal_padding"
+        android:scrollbars="none"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:id="@+id/filtering_bar_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:id="@+id/icons_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:divider="@drawable/filtering_bar_icon_spacer"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:showDividers="middle"
+                />
+
+            <View
+                android:id="@+id/filtering_bar_separator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:visibility="gone"
+                />
+
+            <LinearLayout
+                android:id="@+id/labels_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:divider="@drawable/filtering_bar_labels_spacer"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:showDividers="middle"
+                />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</merge>

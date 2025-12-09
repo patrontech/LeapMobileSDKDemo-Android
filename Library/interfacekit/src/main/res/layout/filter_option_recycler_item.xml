@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    tools:parentTag="android.widget.LinearLayout"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <CheckBox
+        android:id="@+id/filter_item_cb"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="2dp"
+        android:layout_gravity="center_vertical"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:background="@android:color/transparent"
+        tools:button="@drawable/filter_button_item_checked"
+        tools:buttonTint="#2762FF"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/filter_item_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:layout_marginHorizontal="24dp"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="City name"
+        />
+
+</merge>
