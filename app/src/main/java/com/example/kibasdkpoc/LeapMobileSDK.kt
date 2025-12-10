@@ -14,6 +14,7 @@ import com.greencopper.interfacekit.navigation.feature.FeatureResolver
 import com.greencopper.interfacekit.navigation.layout.Layout
 import com.greencopper.interfacekit.navigation.route.Route
 import com.greencopper.interfacekit.rootview.RootLayoutManager
+import com.greencopper.interfacekit.session.SessionManager
 import com.greencopper.maps.MapsAssembly
 import com.greencopper.thuzi.ThuziAssembly
 import com.greencopper.ticketing.TicketingAssembly
@@ -60,7 +61,7 @@ public object LeapMobileSDK {
         App.resolve<RecipeRegisterService>().register()
 
         CoroutineScope(Dispatchers.IO).launch {
-            App.resolve<ContentInitializer>().initialize()
+            App.resolve<SessionManager>().resume()
         }
 
         isInitialized = true
