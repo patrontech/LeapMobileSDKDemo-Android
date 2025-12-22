@@ -1,0 +1,30 @@
+on:
+  workflow_call:
+
+jobs:
+  firebase:
+    name: Firebase
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-${{github.run_number}}
+          path: ./
+
+      - name: Get APK version
+        id: get_version
+        run: |
+          appVersion=$(cat app/build.gradle.kts | grep "versionName " | cut -d '=' -f2 | xargs)
+          echo "version=$appVersion" >> $GITHUB_OUTPUT
+
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.1
+        with:
+          appId: ${{vars.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.GOOGLE_SERVICES_FILE_CONTENT }}
+          releaseNotes: ${{ github.event.head_commit.message }}
+          groups: ${{vars.FIREBASE_APP_DIST_GROUP}}
+          file: FILE.apk

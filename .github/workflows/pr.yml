@@ -1,0 +1,21 @@
+name: Pull Request
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: 
+     - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build_android:
+    name: 'Build Android'
+    uses: ./.github/workflows/_build.yml
+    secrets: inherit

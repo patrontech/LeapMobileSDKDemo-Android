@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+     - master
+    paths-ignore:
+      - '*.md'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build_android:
+    name: 'Build Android'
+    uses: ./.github/workflows/_build.yml
+    secrets: inherit
+
+#   firebase:
+#     name: 'Upload Firebase'
+#     needs:
+#      - build_android
+#     uses: ./.github/workflows/_firebase.yml
+#     secrets: inherit
+#     with:
+#       environment: dev
