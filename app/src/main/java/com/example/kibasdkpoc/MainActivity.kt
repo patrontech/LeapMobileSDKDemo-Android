@@ -4,25 +4,38 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import com.greencopper.core.content.manager.ContentManager
+import com.greencopper.interfacekit.color.UIColor
+import com.greencopper.interfacekit.color.toColorInt
 import com.greencopper.interfacekit.navigation.NavigationController
 import com.greencopper.interfacekit.rootview.RootLayoutHolder
+import com.greencopper.toolkit.App
+import com.greencopper.toolkit.di.resolver.resolve
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 public class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.main)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
             enableEdgeToEdge()
         }
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.main)
 
+        applySDKColors()
+        setupWindowInsets()
+        observeContentChanges()
         setupBackNavigation()
 
         if (intent.data != null) {
@@ -87,5 +100,37 @@ public class MainActivity : FragmentActivity() {
         }
 
         return result
+    }
+
+    private fun setupWindowInsets() {
+        val rootContainer = findViewById<View>(R.id.rootContainer)
+        val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootContainer) { view, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
+            fragmentContainer.updatePadding(top = insets.top, bottom = insets.bottom)
+            view.updatePadding(left = insets.left, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun observeContentChanges() {
+        lifecycleScope.launch {
+            runCatching {
+                App.resolve<ContentManager>().currentContentFlow.collectLatest {
+                    applySDKColors()
+                }
+            }
+        }
+    }
+
+    private fun applySDKColors() {
+        runCatching {
+            val backgroundColor = UIColor.default.topBar.background.toColorInt()
+            window.decorView.setBackgroundColor(backgroundColor)
+            findViewById<View>(R.id.rootContainer)?.setBackgroundColor(backgroundColor)
+        }
     }
 }
