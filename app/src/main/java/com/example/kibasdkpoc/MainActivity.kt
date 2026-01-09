@@ -22,6 +22,8 @@ import com.greencopper.interfacekit.color.UIColor
 import com.greencopper.interfacekit.color.toColorInt
 import com.greencopper.interfacekit.navigation.NavigationController
 import com.greencopper.interfacekit.rootview.RootLayoutHolder
+import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.NavigationControlsHandler
+import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.addNavigationButtonsFlags
 import com.greencopper.toolkit.App
 import com.greencopper.toolkit.di.resolver.resolve
 import kotlinx.coroutines.flow.collectLatest
@@ -152,6 +154,7 @@ public class MainActivity : FragmentActivity() {
 
     private fun handleDeeplink(deeplinkUri: String) {
         val fragment = LeapMobileSDK.resolveDeeplink(deeplinkUri.toUri()) ?: return
+        fragment.addNavigationButtonsFlags(NavigationControlsHandler.SHOW_CLOSE_BUTTON_FLAG)
         addFragment(fragment)
     }
 
