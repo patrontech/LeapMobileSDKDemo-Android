@@ -1,24 +1,29 @@
 package com.example.kibasdkpoc
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.kibasdkpoc.databinding.MainBinding
 import com.greencopper.core.content.manager.ContentManager
 import com.greencopper.interfacekit.color.UIColor
 import com.greencopper.interfacekit.color.toColorInt
 import com.greencopper.interfacekit.navigation.NavigationController
 import com.greencopper.interfacekit.rootview.RootLayoutHolder
+import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.NavigationControlsHandler
+import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.addNavigationButtonsFlags
 import com.greencopper.toolkit.App
 import com.greencopper.toolkit.di.resolver.resolve
 import kotlinx.coroutines.flow.collectLatest
@@ -26,47 +31,46 @@ import kotlinx.coroutines.launch
 
 public class MainActivity : FragmentActivity() {
 
+    private val binding by lazy { MainBinding.inflate(layoutInflater) }
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-            enableEdgeToEdge()
-        }
+        setupEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main)
 
-        applySDKColors()
-        setupWindowInsets()
-        observeContentChanges()
+        setContentView(binding.root)
+        setupInsets()
         setupBackNavigation()
+        observeRootLayout()
+        observeSideEffects()
+        observeContentChanges()
 
-        if (intent.data != null) {
-            handleDeeplink(intent.data)
-        } else {
-            lifecycleScope.launch {
-                LeapMobileSDK.getRootLayout(supportFragmentManager).collect { fragment ->
-                    replaceView(fragment)
-                }
-            }
-        }
+        onIntentReceived(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        handleDeeplink(intent.data)
+        onIntentReceived(intent)
+        viewModel.onReadyToRedirect()
     }
 
-    private fun handleDeeplink(uri: Uri?) {
-        uri?.let {
-            LeapMobileSDK.resolveDeeplink(uri)?.let { fragment -> replaceView(fragment) }
+    private fun setupEdgeToEdge() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+            enableEdgeToEdge()
         }
     }
 
-    private fun replaceView(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootContainer) { view, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
+            binding.fragmentContainer.updatePadding(top = insets.top, bottom = insets.bottom)
+            view.updatePadding(left = insets.left, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
-    /** Handles back navigation for the SDK's nested NavigationController fragments. */
     private fun setupBackNavigation() {
         onBackPressedDispatcher.addCallback(this) {
             if (RootLayoutHolder.onBackPressDispatcher?.hasEnabledCallbacks() == true) {
@@ -77,19 +81,98 @@ public class MainActivity : FragmentActivity() {
             val navigationController = findNavigationControllersInStack(supportFragmentManager)
                 .firstOrNull { it.ncChildFragmentManager.backStackEntryCount > 0 }
 
-            if (navigationController == null) {
-                moveTaskToBack(true)
+            if (navigationController != null) {
+                navigationController.ncChildFragmentManager.popBackStack()
                 return@addCallback
             }
 
-            navigationController.ncChildFragmentManager.popBackStack()
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+                return@addCallback
+            }
+
+            moveTaskToBack(true)
         }
     }
 
-    /** Finds all NavigationControllers in the fragment hierarchy, innermost first. */
-    private fun findNavigationControllersInStack(fragmentManager: FragmentManager): ArrayList<NavigationController<*>> {
-        val result = arrayListOf<NavigationController<*>>()
+    private fun onIntentReceived(intent: Intent) {
+        if (intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY != 0) return
 
+        intent.data?.let { uri ->
+            viewModel.onDeeplinkReceived(uri.toString())
+        }
+    }
+
+    private fun observeRootLayout() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                LeapMobileSDK.getRootLayout(supportFragmentManager).collect { fragment ->
+                    if (supportFragmentManager.backStackEntryCount > 0) {
+                        viewModel.onReadyToRedirect()
+                        return@collect
+                    }
+
+                    val needsReplacement = fragment.id == 0 ||
+                            supportFragmentManager.findFragmentById(fragment.id) == null
+                    
+                    if (needsReplacement) {
+                        replaceFragment(fragment)
+                    }
+                    viewModel.onReadyToRedirect()
+                }
+            }
+        }
+    }
+
+    private fun observeSideEffects() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sideEffects.collectAndConsume { sideEffect ->
+                    when (sideEffect) {
+                        is MainAppSideEffect.HandleDeeplink -> handleDeeplink(sideEffect.deeplink)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeContentChanges() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                runCatching {
+                    App.resolve<ContentManager>().currentContentFlow.collectLatest {
+                        runCatching {
+                            val backgroundColor = UIColor.default.topBar.background.toColorInt()
+                            window.decorView.setBackgroundColor(backgroundColor)
+                            binding.rootContainer.setBackgroundColor(backgroundColor)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleDeeplink(deeplinkUri: String) {
+        val fragment = LeapMobileSDK.resolveDeeplink(deeplinkUri.toUri()) ?: return
+        fragment.addNavigationButtonsFlags(NavigationControlsHandler.SHOW_CLOSE_BUTTON_FLAG)
+        addFragment(fragment)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, fragment)
+            .commitNow()
+    }
+
+    private fun addFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .add(binding.fragmentContainer.id, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun findNavigationControllersInStack(fragmentManager: FragmentManager): List<NavigationController<*>> {
+        val result = mutableListOf<NavigationController<*>>()
         for (fragment in fragmentManager.fragments) {
             if (fragment is NavigationController<*>) {
                 result.addAll(findNavigationControllersInStack(fragment.ncChildFragmentManager))
@@ -98,39 +181,6 @@ public class MainActivity : FragmentActivity() {
                 result.addAll(findNavigationControllersInStack(fragment.childFragmentManager))
             }
         }
-
         return result
-    }
-
-    private fun setupWindowInsets() {
-        val rootContainer = findViewById<View>(R.id.rootContainer)
-        val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
-
-        ViewCompat.setOnApplyWindowInsetsListener(rootContainer) { view, windowInsets ->
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
-            )
-            fragmentContainer.updatePadding(top = insets.top, bottom = insets.bottom)
-            view.updatePadding(left = insets.left, right = insets.right)
-            WindowInsetsCompat.CONSUMED
-        }
-    }
-
-    private fun observeContentChanges() {
-        lifecycleScope.launch {
-            runCatching {
-                App.resolve<ContentManager>().currentContentFlow.collectLatest {
-                    applySDKColors()
-                }
-            }
-        }
-    }
-
-    private fun applySDKColors() {
-        runCatching {
-            val backgroundColor = UIColor.default.topBar.background.toColorInt()
-            window.decorView.setBackgroundColor(backgroundColor)
-            findViewById<View>(R.id.rootContainer)?.setBackgroundColor(backgroundColor)
-        }
     }
 }
