@@ -1,10 +1,10 @@
 {
-"content": {
-"fileName": "content_v25.zip",
-"secret": "15bf9cb77aa74de693cd678ebcbbec05",
-"schema": 1,
-"version": 25,
-"project": "fanaticssdkstaging-2025",
-"deprecatedProjects": []
-}
+  "content": {
+    "fileName": "content_v25.zip",
+    "secret": "15bf9cb77aa74de693cd678ebcbbec05",
+    "schema": 1,
+    "version": 25,
+    "project": "fanaticssdkstaging-2025",
+    "deprecatedProjects": []
+  }
 }

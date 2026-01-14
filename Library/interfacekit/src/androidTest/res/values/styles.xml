@@ -1,5 +1,0 @@
-<resources>
-    <!-- Test application theme. -->
-    <style name="TestTheme" parent="Theme.MaterialComponents.DayNight" />
-
-</resources>

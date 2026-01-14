@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">KIBO</string>
-    <string name="menu_favorites">Text that will be updated by OTA</string>
-    <string name="deeplink_scheme">kiboapp</string>
-</resources>

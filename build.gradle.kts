@@ -55,5 +55,13 @@ allprojects {
                 password = rootProject.githubToken
             }
         }
+
+        maven {
+            url = uri("https://maven.pkg.github.com/patrontech/LeapMobileSDK-Android/")
+            credentials {
+                username = rootProject.githubUser
+                password = rootProject.githubToken
+            }
+        }
     }
 }

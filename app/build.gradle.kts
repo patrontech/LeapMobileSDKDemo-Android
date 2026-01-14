@@ -46,12 +46,5 @@ dependencies {
     implementation(libs.google.servicesLocation)
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
-
-    implementation(project(":core"))
-    implementation(project(":event"))
-    implementation(project(":interfacekit"))
-    implementation(project(":maps"))
-    implementation(project(":thuzi"))
-    implementation(project(":ticketing"))
-    implementation(project(":toolkit"))
+//    implementation("com.github.patrontech.LeapMobileSDK-Android:leapmobilesdk:0.0.4")
 }
