@@ -21,7 +21,7 @@ jobs:
           echo "version=$appVersion" >> $GITHUB_OUTPUT
 
       - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.1
+        uses: wzieba/Firebase-Distribution-Github-Action@bd494989dd4bec0343f78adee87fe66e48279ad6
         with:
           appId: ${{vars.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.GOOGLE_SERVICES_FILE_CONTENT }}
