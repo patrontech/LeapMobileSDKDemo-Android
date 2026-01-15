@@ -1,12 +1,20 @@
 name: Release
 
 on:
+  repository_dispatch:
+    types: [new-sdk-version]
   workflow_dispatch:
-  push:
-    branches:
-     - master
-    paths-ignore:
-      - '*.md'
+    inputs:
+      sdkVersion:
+        description: 'SDK Version'
+        required: true
+        type: string
+  # push:
+  #   branches:
+  #    - master
+  #   paths-ignore:
+  #     - '*.md'
+  #     - .github/*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,16 +25,18 @@ permissions:
   contents: read
 
 jobs:
-  build_android:
-    name: 'Build Android'
-    uses: ./.github/workflows/_build.yml
-    secrets: inherit
+  build:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-#   firebase:
-#     name: 'Upload Firebase'
-#     needs:
-#      - build_android
-#     uses: ./.github/workflows/_firebase.yml
-#     secrets: inherit
-#     with:
-#       environment: dev
+      - name: Run Build Action
+        uses: ./.github/actions/build-android
+        with:
+          gradle: assembleProd
+          apkPath: app/build/outputs/apk/prod
+          apkName: LeapDemo
+          signing_key: ${{ secrets.SIGNING_KEY }}
+          keystore_password: ${{ secrets.KEYSTORE_PASSWORD }} 
+          key_alias: ${{ secrets.KEY_ALIAS }}
