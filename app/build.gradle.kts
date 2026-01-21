@@ -32,8 +32,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         compose = true
@@ -46,7 +46,28 @@ dependencies {
     implementation(libs.google.servicesLocation)
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
-//    implementation("com.github.patrontech.LeapMobileSDK-Android:leapmobilesdk:0.0.4")
+
+    // Compose UI dependencies
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.compose.material3)
+
     // Leap Mobile SDK
     implementation(libs.leapmobilesdk)
+    implementation(libs.qrScanner)
+
+    // SDKs needed to make the app properly run
+    implementation(libs.retrofit)
+    implementation(libs.retrofitSerializationConverter)
+    implementation(libs.okHttp)
+    implementation(libs.okHttpLoggingInterceptor)
+    implementation(libs.androidx.security)
+    implementation(libs.androidx.datastore)
+    implementation(libs.kotlinReflect)
+    implementation(libs.androidx.work)
+    implementation(libs.zip4j)
+    implementation(libs.kiba.parsimonious)
+    implementation(libs.komposable)
 }
