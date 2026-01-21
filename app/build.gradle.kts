@@ -47,4 +47,6 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
 //    implementation("com.github.patrontech.LeapMobileSDK-Android:leapmobilesdk:0.0.4")
+    // Leap Mobile SDK
+    implementation(libs.leapmobilesdk)
 }

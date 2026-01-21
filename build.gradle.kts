@@ -39,6 +39,14 @@ allprojects {
         mavenLocal()
         google()
         mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/patrontech/LeapMobileSDK-Android/")
+            credentials {
+                username = rootProject.githubUser
+                password = rootProject.githubToken
+            }
+        }
 
         maven {
             url = uri("https://maven.pkg.github.com/patrontech/pixplicity-sharp/")
@@ -50,14 +58,6 @@ allprojects {
 
         maven {
             url = uri("https://maven.pkg.github.com/patrontech/code-scanner/")
-            credentials {
-                username = rootProject.githubUser
-                password = rootProject.githubToken
-            }
-        }
-
-        maven {
-            url = uri("https://maven.pkg.github.com/patrontech/LeapMobileSDK-Android/")
             credentials {
                 username = rootProject.githubUser
                 password = rootProject.githubToken

@@ -1,7 +1,7 @@
 package com.example.kibasdkpoc
 
 import android.app.Application
-import com.greencopper.toolkit.logging.multilogging.configurations.ConsoleLoggingConfiguration
+import com.greencopper.leapmobilesdk.toolkit.logging.multilogging.configurations.ConsoleLoggingConfiguration
 
 public class SdkPocApplication : Application() {
 

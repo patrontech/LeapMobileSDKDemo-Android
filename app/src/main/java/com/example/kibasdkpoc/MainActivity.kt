@@ -17,15 +17,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.kibasdkpoc.databinding.MainBinding
-import com.greencopper.core.content.manager.ContentManager
-import com.greencopper.interfacekit.color.UIColor
-import com.greencopper.interfacekit.color.toColorInt
-import com.greencopper.interfacekit.navigation.NavigationController
-import com.greencopper.interfacekit.rootview.RootLayoutHolder
-import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.NavigationControlsHandler
-import com.greencopper.interfacekit.ui.views.navigationcontrols.handlers.addNavigationButtonsFlags
-import com.greencopper.toolkit.App
-import com.greencopper.toolkit.di.resolver.resolve
+import com.greencopper.leapmobilesdk.core.content.manager.ContentManager
+import com.greencopper.leapmobilesdk.interfacekit.color.UIColor
+import com.greencopper.leapmobilesdk.interfacekit.color.toColorInt
+import com.greencopper.leapmobilesdk.interfacekit.navigation.NavigationController
+import com.greencopper.leapmobilesdk.interfacekit.rootview.RootLayoutHolder
+import com.greencopper.leapmobilesdk.interfacekit.ui.views.navigationcontrols.handlers.NavigationControlsHandler
+import com.greencopper.leapmobilesdk.interfacekit.ui.views.navigationcontrols.handlers.addNavigationButtonsFlags
+import com.greencopper.leapmobilesdk.toolkit.App
+import com.greencopper.leapmobilesdk.toolkit.di.resolver.resolve
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
