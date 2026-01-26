@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="maps__geoMap__location_request__title">Allow "%1$s" to use your location?</string>
-    <string name="maps__geoMap__location_request__message">Get exclusive content and communication when onsite.</string>
-</resources>

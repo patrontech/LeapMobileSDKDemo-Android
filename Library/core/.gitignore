@@ -1,7 +1,0 @@
-/build
-*/src/main/assets
-
-# Include for tests:
-!content_v*.zip
-!images_full_v*.zip
-!runConfig.json

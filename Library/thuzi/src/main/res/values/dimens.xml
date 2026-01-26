@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="badge_recycler_horizontalPadding">18dp</dimen>
-    <dimen name="badge_recycler_verticalMargin">10dp</dimen>
-    <dimen name="badge_item_margin">6dp</dimen>
-    <dimen name="badge_item_big_margin">56dp</dimen>
-</resources>
