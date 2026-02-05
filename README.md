@@ -1,5 +1,5 @@
 # Leap Mobile SDK
-The library is constructed with a list of Assemblys. An Assembly contains all the necessary pieces for a feature to work. 
+The library is constructed with a list of Assemblies. An Assembly contains all the necessary pieces for a feature to work. 
 
 The project this SDK is based on is made up of many different modules. For the sake of the SDK, these modules have all been combined into a single module. 
 - `toolkit`, and `core` contain things like LocalStorage, networking, and initialization. 
@@ -73,8 +73,8 @@ dependencies {
     // SDK runtime
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
-    implementation("com.squareup.okhttp3:okhttp:5.3.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("androidx.security:security-crypto:1.1.0")
     implementation("androidx.datastore:datastore-preferences:1.2.0")
     implementation("androidx.work:work-runtime-ktx:2.11.0")
@@ -169,10 +169,9 @@ Register the Activity that will host the SDK and handle VIEW intents for your cu
 
 ```xml
 <activity
-    android:name=".SdkActivity"
-    android:exported="true"
     android:parentActivityName=".MainActivity"
-    android:theme="@style/Theme.SDKDeeplinking">
+    ...
+    >
     <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
