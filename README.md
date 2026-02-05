@@ -62,7 +62,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.2.0")
     implementation("androidx.work:work-runtime-ktx:2.11.0")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.2.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:<your_kotlin_version>")
     implementation("net.lingala.zip4j:zip4j:2.9.0")
     implementation("com.toggl:komposable-architecture:1.0.0-preview04")
     implementation("com.google.zxing:core:3.4.1")
@@ -76,7 +76,7 @@ Ensure to use exactly `zip4j` version 2.9.0.
 
 ## Assets / Initial content
 
-Runtime content lives under app/src/main/assets/content/. This content, including images, must be bundled with the app to ensure offline support.
+Runtime content lives under `app/src/main/assets/content/`. This content, including images, must be bundled with the app to ensure offline support.
 
 - We'll provide the necessary files for the initial setup.
 - Note that the **X** is the version number:
