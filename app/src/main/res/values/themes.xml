@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.KIBASDKPOC" parent="Theme.MaterialComponents.DayNight">
+        <!-- Fallback dark background for edge-to-edge before SDK colors are applied -->
+        <item name="android:windowBackground">@color/sdk_fallback_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

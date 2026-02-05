@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "795174741465",
+    "project_id": "app-revamp-qa",
+    "storage_bucket": "app-revamp-qa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795174741465:android:5fbe70920594fab8ba65c8",
+        "android_client_info": {
+          "package_name": "com.example.kibasdkpoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795174741465-8lnrslahaq8c9oevjhscurmpn7q8ir9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8JAzY65a2eLLEd4j9KcrfWTpaxghx988"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795174741465-8lnrslahaq8c9oevjhscurmpn7q8ir9p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "795174741465-40iib08vbv87pe6ndon0mi5lhal868p0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apprevampqa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

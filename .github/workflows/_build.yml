@@ -1,0 +1,68 @@
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Build Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+  
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build APK
+        run: |
+          if [ "${{ github.ref_name }}" == "master" ]; then
+            echo "Building prod APK"
+            ./gradlew assembleProd -PciVersionCode=${{ github.run_number }}
+          elif [ "${{ github.ref_name }}" == "develop" ]; then
+            echo "Building debug APK"
+            ./gradlew assembleDebug -PciVersionCode=${{ github.run_number }}
+          fi
+
+      - name: Get APK version
+        id: get_version
+        run: |
+          appVersion=$(cat app/build.gradle.kts | grep "versionName " | cut -d '=' -f2 | xargs)
+          echo "version=$appVersion" >> $GITHUB_OUTPUT
+
+      - name: APK Directory
+        id: apk_dir
+        run: |
+          if [ "${{ github.ref_name }}" == "master" ]; then
+            apkDir="app/build/outputs/apk/prod"
+          elif [ "${{ github.ref_name }}" == "develop" ]; then
+            apkDir="app/build/outputs/apk/debug"
+          fi
+          echo "apkDir=$apkDir" >> $GITHUB_OUTPUT
+
+      - name: Sign app APK
+        uses: r0adkll/sign-android-release@349ebdef58775b1e0d8099458af0816dc79b6407
+        id: sign_app
+        with:
+          releaseDirectory: ${{ steps.apk_dir.outputs.apkDir }}
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: android
+          keyStorePassword: android
+          keyPassword: android
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Rename APK
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} LeapDemo_${{ steps.get_version.outputs.version }}_${{github.run_number}}_${{ github.ref_name }}.apk
+
+      - name: Upload stage APK
+        # if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-${{github.run_number}}
+          path: LeapDemo_${{ steps.get_version.outputs.version }}_${{github.run_number}}_${{ github.ref_name }}.apk
+          retention-days: 14
