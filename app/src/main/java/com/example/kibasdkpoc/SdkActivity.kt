@@ -14,8 +14,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.kibasdkpoc.analytics.MyScreenViewEvent
 import com.example.kibasdkpoc.databinding.MainBinding
 import com.greencopper.leapmobilesdk.core.content.manager.ContentManager
+import com.greencopper.leapmobilesdk.core.services.track
 import com.greencopper.leapmobilesdk.interfacekit.color.UIColor
 import com.greencopper.leapmobilesdk.interfacekit.color.toColorInt
 import com.greencopper.leapmobilesdk.interfacekit.navigation.NavigationController
@@ -37,6 +39,9 @@ public class SdkActivity : FragmentActivity() {
         setupBackNavigation()
         observeContentChanges()
         handleDeeplink()
+
+        // Track that this activity started (generic)
+        App.track(MyScreenViewEvent("SdkActivity"))
     }
 
     private fun setupBackNavigation() {
@@ -109,6 +114,9 @@ public class SdkActivity : FragmentActivity() {
 
     private fun replaceView(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+        // Track screen view using the fragment class simple name
+        val screenName = fragment::class.java.simpleName ?: "unknown_screen"
+        App.track(MyScreenViewEvent(screenName))
     }
 
     private fun setupEdgeToEdge() {
