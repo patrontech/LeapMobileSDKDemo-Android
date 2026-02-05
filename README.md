@@ -1,21 +1,4 @@
 # Leap Mobile SDK
-The library is constructed with a list of Assemblies. An Assembly contains all the necessary pieces for a feature to work. 
-
-The project this SDK is based on is made up of many different modules. For the sake of the SDK, these modules have all been combined into a single module. 
-- `toolkit`, and `core` contain things like LocalStorage, networking, and initialization. 
-- `interfacekit` includes many features, including widgets, and UI components that other packages rely on.
-- `event` contains the schedule, activity, and performer features
-- `maps` is for google maps
-- `thuzi` is for the activations features, including user account registration
-- `ticketing` is for ShowClix ticket scan
-
-## Terminology
-- Layout: A typealias for a DialogFragment. Can be embedded anywhere as a normal Fragment.
-- Recipe: Defines a unique key for a feature, and the location of a config file used for that feature
-- Initializer: Constructs a Layout for a given set of parameters
-- OTA: "Over the air" - Describing how content updates are received from the CMS
-
----
 
 ## Prerequisites
 
@@ -71,8 +54,8 @@ dependencies {
     implementation("com.code-scanner:library:{{ latest version }}")
 
     // SDK runtime
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("androidx.security:security-crypto:1.1.0")
@@ -93,7 +76,7 @@ Ensure to use exactly `zip4j` version 2.9.0.
 
 ## Assets / Initial content
 
-Runtime content lives under `app/src/main/assets/content/`. To get initial content:
+Runtime content lives under app/src/main/assets/content/. This content, including images, must be bundled with the app to ensure offline support.
 
 - We'll provide the necessary files for the initial setup.
 - Note that the **X** is the version number:
@@ -239,13 +222,3 @@ Jetpack Compose and Fragments are built on different UI paradigms, which can lea
 For SDKs or libraries that require Fragments (such as LeapMobileSDK), always create a dedicated Activity that hosts a `FrameLayout` or `FragmentContainerView`. This container should be used to inflate and display Fragments. Avoid mixing Compose UI and Fragment transactions in the same layout to prevent lifecycle and navigation problems.
 
 This approach ensures predictable behavior, proper back stack management, and compatibility with SDKs that rely on Fragments.
-
-
----
-
-## Test coverage exemptions
-Some types of classes are exempted from test coverage requirements:
-- Anything in a `ui` package
-- Any of the Color or TextStyle classes
-- Assembly classes   
-

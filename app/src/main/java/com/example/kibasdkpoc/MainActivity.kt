@@ -80,7 +80,7 @@ private fun DeepLinkingList() {
 
 @Composable
 private fun DeepLinkButton(
-    modifier: Modifier = Modifier, onClick: () -> Unit?, buttonText: String
+    modifier: Modifier = Modifier, onClick: () -> Unit, buttonText: String
 ) {
     Button(
         modifier = modifier
