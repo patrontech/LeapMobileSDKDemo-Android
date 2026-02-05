@@ -57,15 +57,21 @@ dependencies {
     implementation(libs.material)
 
     // Compose UI dependencies
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.material)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.activity)
+    implementation(libs.androidx.appCompat)
+
 
     // Leap Mobile SDK
     implementation(libs.leapmobilesdk)
     implementation(libs.qrScanner)
+    implementation(libs.kiba.parsimonious)
 
     // SDKs needed to make the app properly run
     implementation(libs.retrofit)
@@ -74,9 +80,13 @@ dependencies {
     implementation(libs.okHttpLoggingInterceptor)
     implementation(libs.androidx.security)
     implementation(libs.androidx.datastore)
-    implementation(libs.kotlinReflect)
     implementation(libs.androidx.work)
+    implementation(libs.androidx.recyclerView)
+    implementation(libs.kotlinReflect)
     implementation(libs.zip4j)
-    implementation(libs.kiba.parsimonious)
     implementation(libs.komposable)
+    implementation(libs.zxing)
+    implementation(libs.fuzzywuzzy)
+    implementation(libs.sharpSVG)
+
 }
