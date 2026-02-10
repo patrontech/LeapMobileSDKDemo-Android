@@ -20,6 +20,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.example.kibasdkpoc.analytics.ButtonClickEvent
+import com.example.kibasdkpoc.analytics.MyScreenViewEvent
+import com.greencopper.leapmobilesdk.LeapMobileSDK
 
 public class MainActivity : ComponentActivity() {
 
@@ -30,6 +33,9 @@ public class MainActivity : ComponentActivity() {
         setContent {
             DeepLinkingList()
         }
+
+        // Track that the MainActivity screen was viewed
+        LeapMobileSDK.track(MyScreenViewEvent("MainActivity"))
     }
 }
 
@@ -58,6 +64,10 @@ private fun DeepLinkingList() {
         ) {
             uris.forEach { uri ->
                 DeepLinkButton(onClick = {
+                    // Track button click before navigating
+                    LeapMobileSDK.track(
+                        ButtonClickEvent(buttonName = uri.second, screenName = "MainActivity")
+                    )
                     val intent = Intent(
                         Intent.ACTION_VIEW, uri.first.toUri()
                     )
@@ -67,6 +77,10 @@ private fun DeepLinkingList() {
 
             DeepLinkButton(
                 modifier = Modifier.padding(top = 32.dp), onClick = {
+                    // Track Start SDK button click
+                    LeapMobileSDK.track(
+                        ButtonClickEvent(buttonName = "Start SDK", screenName = "MainActivity")
+                    )
                     context.startActivity(
                         Intent(
                             context, SdkActivity::class.java
