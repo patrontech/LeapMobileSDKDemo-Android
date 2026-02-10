@@ -11,20 +11,12 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.kibasdkpoc.analytics.MyScreenViewEvent
 import com.example.kibasdkpoc.databinding.MainBinding
-import com.greencopper.leapmobilesdk.core.content.manager.ContentManager
-import com.greencopper.leapmobilesdk.core.services.track
-import com.greencopper.leapmobilesdk.interfacekit.color.UIColor
-import com.greencopper.leapmobilesdk.interfacekit.color.toColorInt
+import com.greencopper.leapmobilesdk.LeapMobileSDK
 import com.greencopper.leapmobilesdk.interfacekit.navigation.NavigationController
 import com.greencopper.leapmobilesdk.interfacekit.rootview.RootLayoutHolder
-import com.greencopper.leapmobilesdk.toolkit.App
-import com.greencopper.leapmobilesdk.toolkit.di.resolver.resolve
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 public class SdkActivity : FragmentActivity() {
@@ -37,11 +29,10 @@ public class SdkActivity : FragmentActivity() {
         setContentView(binding.root)
         setupInsets()
         setupBackNavigation()
-        observeContentChanges()
         handleDeeplink()
 
         // Track that this activity started (generic)
-        App.track(MyScreenViewEvent("SdkActivity"))
+        LeapMobileSDK.track(MyScreenViewEvent("SdkActivity"))
     }
 
     private fun setupBackNavigation() {
@@ -81,22 +72,6 @@ public class SdkActivity : FragmentActivity() {
         return result
     }
 
-    private fun observeContentChanges() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                runCatching {
-                    App.resolve<ContentManager>().currentContentFlow.collectLatest {
-                        runCatching {
-                            val backgroundColor = UIColor.default.topBar.background.toColorInt()
-                            window.decorView.setBackgroundColor(backgroundColor)
-                            binding.rootContainer.setBackgroundColor(backgroundColor)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun handleDeeplink() {
         val intentData = intent.data
         val fragment = LeapMobileSDK.resolveDeeplink(intentData ?: Uri.EMPTY)
@@ -116,7 +91,7 @@ public class SdkActivity : FragmentActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
         // Track screen view using the fragment class simple name
         val screenName = fragment::class.java.simpleName ?: "unknown_screen"
-        App.track(MyScreenViewEvent(screenName))
+        LeapMobileSDK.track(MyScreenViewEvent(screenName))
     }
 
     private fun setupEdgeToEdge() {
