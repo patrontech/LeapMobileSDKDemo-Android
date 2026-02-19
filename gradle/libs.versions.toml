@@ -4,7 +4,7 @@ targetSdk = "36"
 compileSdk = "36"
 minSdk = "29"
 gradle = "8.13.0"
-kotlin = "2.2.10" # When updating, must also update the gradle-plugin value in buildSrc/build.gradle.kts
+kotlin = "2.3.10" # When updating, must also update the gradle-plugin value in buildSrc/build.gradle.kts
 desugaring = "2.1.4"
 
 androidx-lifecycle = "2.9.4"
@@ -66,6 +66,7 @@ junitMannodermaus = "1.7.0"
 mockk = "1.13.8"
 androidXFragmentTests = "1.8.6"
 json = "20240303"
+webkit = "1.11.0"
 
 [libraries]
 androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
@@ -178,6 +179,7 @@ test-composeJunit5 = { group = "de.mannodermaus.junit5", name = "android-test-co
 test-mockkAndroid = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 test-json = { group = "org.json", name = "json", version.ref = "json" }
 test-composeManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 
 [plugins]
 kotlinAndroid = { id = "org.jetbrains.kotlin.android" }
