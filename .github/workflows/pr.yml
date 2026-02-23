@@ -33,3 +33,6 @@ jobs:
       - name: Build APK
         run: |
           ./gradlew assembleDebug
+        env:
+          GITHUB_USERNAME: ${{ vars.GH_USER }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
