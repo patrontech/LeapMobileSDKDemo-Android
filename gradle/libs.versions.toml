@@ -4,7 +4,7 @@ targetSdk = "36"
 compileSdk = "36"
 minSdk = "29"
 gradle = "8.13.0"
-kotlin = "2.3.10" # When updating, must also update the gradle-plugin value in buildSrc/build.gradle.kts
+kotlin = "2.2.10" # When updating, must also update the gradle-plugin value in buildSrc/build.gradle.kts
 desugaring = "2.1.4"
 
 androidx-lifecycle = "2.9.4"
