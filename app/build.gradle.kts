@@ -20,21 +20,19 @@ android {
     }
 
     buildTypes {
+		debug {
+			isMinifyEnabled = false
+
+			signingConfig = signingConfigs.getByName("debug")
+			matchingFallbacks += listOf("debug")
+		}
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        create("prod") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             matchingFallbacks += listOf("release")
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -45,6 +43,7 @@ android {
         jvmToolchain(17)
     }
     buildFeatures {
+		buildConfig = true
         compose = true
         viewBinding = true
     }
@@ -88,5 +87,12 @@ dependencies {
     implementation(libs.zxing)
     implementation(libs.fuzzywuzzy)
     implementation(libs.sharpSVG)
+	implementation(libs.androidx.webkit)
 
+}
+
+configurations.all {
+	resolutionStrategy {
+		force("androidx.webkit:webkit:1.11.0")
+	}
 }

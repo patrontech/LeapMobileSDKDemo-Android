@@ -66,6 +66,7 @@ junitMannodermaus = "1.7.0"
 mockk = "1.13.8"
 androidXFragmentTests = "1.8.6"
 json = "20240303"
+webkit = "1.11.0"
 
 [libraries]
 androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
@@ -178,6 +179,7 @@ test-composeJunit5 = { group = "de.mannodermaus.junit5", name = "android-test-co
 test-mockkAndroid = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 test-json = { group = "org.json", name = "json", version.ref = "json" }
 test-composeManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 
 [plugins]
 kotlinAndroid = { id = "org.jetbrains.kotlin.android" }
