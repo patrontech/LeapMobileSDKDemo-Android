@@ -23,6 +23,7 @@ concurrency:
 permissions:
   id-token: write
   contents: read
+  packages: read   # Lets default GITHUB_TOKEN access GitHub Packages (no PAT secret needed)
 
 jobs:
   build:
