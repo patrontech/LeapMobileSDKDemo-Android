@@ -88,7 +88,22 @@ public class SdkActivity : FragmentActivity() {
     }
 
     private fun replaceView(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+//		val compose = fragment.view?.findViewById<ComposeView>(com.greencopper.leapmobilesdk.R.id.compose_view_test)
+//		compose?.setContent {
+//			FanaticsPill("$117.70", { Toast.makeText(this@SdkActivity, "Clicado",
+//				Toast.LENGTH_LONG).show() })
+//		}
+		supportFragmentManager.beginTransaction()
+			.replace(
+				R.id.fragmentContainer,
+				fragment
+			)
+			.commitNow()
+//		val compose2 = fragment.view?.findViewById<ComposeView>(com.greencopper.leapmobilesdk.R.id.compose_view_test)
+//		compose2?.setContent {
+//			FanaticsPill("$117.70", { Toast.makeText(this@SdkActivity, "Clicado",
+//				Toast.LENGTH_LONG).show() })
+//		}
         // Track screen view using the fragment class simple name
         val screenName = fragment::class.java.simpleName ?: "unknown_screen"
         LeapMobileSDK.track(MyScreenViewEvent(screenName))
