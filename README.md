@@ -13,13 +13,7 @@ Currently the SDK is hosted as a [GitHub Package](https://github.com/patrontech/
 This means that only those with access to the repository can download the package using their git username and token.  
 To generate a token, go to your GitHub settings -> Developer Settings -> Personal Access Tokens -> Tokens (classic) -> Generate new token.
 You can also click here: [Generate GitHub Token](https://github.com/settings/tokens/new)
-Make sure to give it at least the `read:packages` scope.
-
-**Credentials (choose one):**
-- **Username + token:** Set `gpr.user` and `gpr.key` in `local.properties`, or env vars `GITHUB_USERNAME` and `GITHUB_TOKEN`.
-- **Token only:** Set only the token (`gpr.key` in `local.properties` or `GITHUB_TOKEN`). The build uses `GITHUB_ACTOR` in CI, or falls back to the org name `patrontech` for GitHub Packages.
-- **GitHub Actions:** The workflow uses the built-in `GITHUB_TOKEN` and `GITHUB_ACTOR`; no repo secrets are required for package access (ensure `packages: read` in workflow permissions).
-
+Make sure to give it at least the `read:packages` scope.  
 Then, add the following to your `build.gradle.kts` file in the root of your project:
 ```kotlin
 allprojects {

@@ -14,7 +14,6 @@ concurrency:
 permissions:
   id-token: write
   contents: read
-  packages: read
 
 jobs:
   build:
@@ -34,7 +33,3 @@ jobs:
       - name: Build APK
         run: |
           ./gradlew assembleDebug
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_USERNAME: ${{ secrets.GH_USER }}
-
