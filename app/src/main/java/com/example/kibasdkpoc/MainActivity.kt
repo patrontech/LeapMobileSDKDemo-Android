@@ -20,6 +20,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +37,7 @@ import com.example.kibasdkpoc.designsystem.DemoButtons
 import com.example.kibasdkpoc.designsystem.DemoHeaderText
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
 import com.greencopper.leapmobilesdk.LeapMobileSDK
+import kotlinx.coroutines.launch
 
 private const val DEEPLINK_SCHEME = "fanaticssdkstaging"
 
@@ -77,8 +79,7 @@ public class MainActivity : ComponentActivity() {
                     val observer = LifecycleEventObserver { _, event ->
                         when (event) {
                             Lifecycle.Event.ON_RESUME -> {
-                                val cookie = CookieManager.getInstance()
-                                    .getCookie(FANATICS_URL)
+                                val cookie = CookieManager.getInstance().getCookie(FANATICS_URL)
                                 isUserLogged = cookie != null
                             }
 
@@ -92,7 +93,6 @@ public class MainActivity : ComponentActivity() {
                         lifecycleOwner.lifecycle.removeObserver(observer)
                     }
                 }
-
             }
         }
 
@@ -162,12 +162,17 @@ private fun DeepLinkingList(
             }
 
             if (isUserLogged) {
+                val coroutineScope = rememberCoroutineScope()
+
                 DemoButtons(modifier = Modifier.padding(top = 16.dp), buttonText = "Logout") {
                     LeapMobileSDK.track(
                         ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity")
                     )
-                    LeapMobileSDK.logout()
-                    onLogoutClicked()
+
+                    coroutineScope.launch {
+                        LeapMobileSDK.logout()
+                        onLogoutClicked()
+                    }
                 }
             }
         }
