@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -63,36 +64,7 @@ public class MainActivity : ComponentActivity() {
 
         setContent {
             KibaSdkPocTheme {
-                var isUserLogged by remember { mutableStateOf(false) }
-
-                DeepLinkingList(
-                    isUserLogged = isUserLogged,
-                    onLogoutClicked = {
-                        isUserLogged = false
-                        Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
-                    }
-                )
-
-                val lifecycleOwner = LocalLifecycleOwner.current
-
-                DisposableEffect(lifecycleOwner) {
-                    val observer = LifecycleEventObserver { _, event ->
-                        when (event) {
-                            Lifecycle.Event.ON_RESUME -> {
-                                val cookie = CookieManager.getInstance().getCookie(FANATICS_URL)
-                                isUserLogged = cookie != null
-                            }
-
-                            else -> {}
-                        }
-                    }
-
-                    lifecycleOwner.lifecycle.addObserver(observer)
-
-                    onDispose {
-                        lifecycleOwner.lifecycle.removeObserver(observer)
-                    }
-                }
+                DeepLinkingList()
             }
         }
 
@@ -116,11 +88,30 @@ public class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun DeepLinkingList(
-    isUserLogged: Boolean,
-    onLogoutClicked: () -> Unit
-) {
+internal fun DeepLinkingList() {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    var isUserLogged by remember { mutableStateOf(false) }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> {
+                    val cookie = CookieManager.getInstance().getCookie(FANATICS_URL)
+                    isUserLogged = cookie != null
+                }
+
+                else -> {}
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -164,14 +155,20 @@ private fun DeepLinkingList(
             if (isUserLogged) {
                 val coroutineScope = rememberCoroutineScope()
 
-                DemoButtons(modifier = Modifier.padding(top = 16.dp), buttonText = "Logout") {
+                DemoButtons(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .testTag("logout_button"),
+                    buttonText = "Logout"
+                ) {
                     LeapMobileSDK.track(
                         ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity")
                     )
 
                     coroutineScope.launch {
                         LeapMobileSDK.logout()
-                        onLogoutClicked()
+                        isUserLogged = false
+                        Toast.makeText(context, "You have been logged out.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -183,9 +180,6 @@ private fun DeepLinkingList(
 @Composable
 private fun DeepLinkingListPreview() {
     KibaSdkPocTheme {
-        DeepLinkingList(
-            isUserLogged = true,
-            onLogoutClicked = {}
-        )
+        DeepLinkingList()
     }
 }

@@ -3,6 +3,7 @@ package com.example.kibasdkpoc
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
@@ -73,17 +74,22 @@ public class SdkActivity : FragmentActivity() {
     }
 
     private fun handleDeeplink() {
-        val intentData = intent.data
-        val fragment = LeapMobileSDK.resolveDeeplink(intentData ?: Uri.EMPTY)
+        try {
+            val intentData = intent.data
+            val fragment = LeapMobileSDK.resolveDeeplink(intentData ?: Uri.EMPTY)
 
-        if (intentData != null && fragment != null) {
-            replaceView(fragment)
-        } else {
-            lifecycleScope.launch {
-                LeapMobileSDK.getRootLayout(supportFragmentManager).collect { fragment ->
-                    replaceView(fragment)
+            if (intentData != null && fragment != null) {
+                replaceView(fragment)
+            } else {
+                lifecycleScope.launch {
+                    LeapMobileSDK.getRootLayout(supportFragmentManager).collect { fragment ->
+                        replaceView(fragment)
+                    }
                 }
             }
+        } catch (ex: Exception) {
+            Toast.makeText(this, ex.message, Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 

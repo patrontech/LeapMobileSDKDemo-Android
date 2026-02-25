@@ -89,6 +89,10 @@ dependencies {
     implementation(libs.sharpSVG)
 	implementation(libs.androidx.webkit)
 
+	// Compose UI testing
+	androidTestImplementation(platform(libs.compose.bom))
+	androidTestImplementation(libs.test.composeUiJunit4)
+	debugImplementation(libs.test.composeManifest)
 }
 
 configurations.all {

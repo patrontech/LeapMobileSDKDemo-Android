@@ -179,6 +179,7 @@ test-composeJunit5 = { group = "de.mannodermaus.junit5", name = "android-test-co
 test-mockkAndroid = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 test-json = { group = "org.json", name = "json", version.ref = "json" }
 test-composeManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+test-composeUiJunit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 
 [plugins]
