@@ -1,0 +1,70 @@
+name: Get next version
+description: Computes the next semantic version from git tags (no prefix) and conventional commits.
+inputs:
+  change_path:
+    description: Optional path to consider for changes (e.g. LeapMobileSDK-iOS/Sources). If set, only commits that touch this path are considered.
+    required: false
+    default: ''
+  major_pattern:
+    description: Extended regex to detect major (breaking) bumps in commit messages. If any commit matches, version bumps major.
+    required: false
+    default: '^feat!|^fix!|^[^:]+!:|BREAKING CHANGE:'
+  minor_pattern:
+    description: Extended regex to detect minor (feature) bumps in commit messages. If any commit matches (and none match major), version bumps minor.
+    required: false
+    default: '^feat(\([^)]+\))?:'
+runs:
+  using: composite
+  steps:
+    - name: Compute next version
+      id: version
+      shell: bash
+      run: |
+        set -e
+        CHANGE_PATH="${{ inputs.change_path }}"
+        MAJOR_PATTERN='${{ inputs.major_pattern }}'
+        MINOR_PATTERN='${{ inputs.minor_pattern }}'
+
+        # Latest tag matching semver without prefix (e.g. 0.9.2); sort works on macOS (no sort -V)
+        LATEST_TAG=$(git tag -l '[0-9]*.[0-9]*.[0-9]*' 2>/dev/null | sort -t. -k1,1n -k2,2n -k3,3n | tail -n1)
+        if [ -z "$LATEST_TAG" ]; then
+          MAJOR=0
+          MINOR=0
+          PATCH=0
+          REV_RANGE="HEAD"
+        else
+          REV_RANGE="${LATEST_TAG}..HEAD"
+          IFS=. read -r MAJOR MINOR PATCH <<< "$LATEST_TAG"
+          PATCH=${PATCH:-0}
+        fi
+
+        # Commits since latest tag (optional path filter)
+        if [ -n "$CHANGE_PATH" ]; then
+          COMMITS=$(git log "$REV_RANGE" --pretty=format:"%s%n%b" --no-merges -- "$CHANGE_PATH" 2>/dev/null || true)
+        else
+          COMMITS=$(git log "$REV_RANGE" --pretty=format:"%s%n%b" --no-merges 2>/dev/null || true)
+        fi
+
+        # Bump type from commit patterns (major overrides minor)
+        BUMP="patch"
+        if [ -n "$COMMITS" ]; then
+          if [ -n "$MAJOR_PATTERN" ] && echo "$COMMITS" | grep -qE "$MAJOR_PATTERN"; then
+            BUMP="major"
+          elif [ -n "$MINOR_PATTERN" ] && echo "$COMMITS" | grep -qE "$MINOR_PATTERN"; then
+            BUMP="minor"
+          fi
+        fi
+
+        case "$BUMP" in
+          major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+          minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+          patch) PATCH=$((PATCH + 1)) ;;
+        esac
+
+        VERSION="${MAJOR}.${MINOR}.${PATCH}"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "Next version: $VERSION"
+outputs:
+  version:
+    description: Next semantic version (e.g. 0.9.3), no prefix
+    value: ${{ steps.version.outputs.version }}

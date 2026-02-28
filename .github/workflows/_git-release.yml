@@ -1,0 +1,59 @@
+on:
+  workflow_call:
+
+jobs:
+  release:
+    name: New Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-${{github.run_number}}
+          path: ./
+
+      - name: Get Leap Mobile SDK version
+        id: sdk_version
+        run: |
+          SDK_VERSION=$(grep '^leapmobilesdk = "' gradle/libs.versions.toml | sed 's/leapmobilesdk = "\(.*\)"/\1/')
+          echo "version=$SDK_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Application Version
+        id: next_version
+        uses: ./.github/actions/get-next-version
+        with:
+          change_path: 'LeapMobileSDKDemo-Android/app'
+
+      - name: Generate Release Notes
+        run: |
+          {
+            echo "# Release ${{ steps.next_version.outputs.version }}"
+            echo ""
+            echo "**App Version:** ${{ steps.next_version.outputs.version }}"
+            echo "**Leap Mobile SDK Version:** ${{ steps.sdk_version.outputs.version }}"
+            echo "**Build:** ${{ github.run_number }}"
+            echo "**Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+            echo ""
+            echo "## Changes"
+            git log --pretty=format:"- %s (%h)" --no-merges -10
+          } > releaseNotes.txt
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=${{ steps.next_version.outputs.version }}
+          APK=$(find . -maxdepth 1 -name '*.apk' -type f | head -1)
+          if [ -z "$APK" ]; then
+            echo "No APK found in artifact"
+            exit 1
+          fi
+          gh release create "$TAG" "$APK" \
+            --title "Release $TAG" \
+            --notes "$(cat releaseNotes.txt)"
