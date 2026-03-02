@@ -1,9 +1,13 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
     alias(libs.plugins.conventions.kiba.app)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinCompose)
 }
+
+val leapSdkVersion: String = libs.versions.leapmobilesdk.get()
 
 android {
     namespace = "com.example.kibasdkpoc"
@@ -46,6 +50,13 @@ android {
 		buildConfig = true
         compose = true
         viewBinding = true
+    }
+
+    applicationVariants.configureEach {
+        outputs.configureEach {
+            (this as BaseVariantOutputImpl).outputFileName =
+                "LeapDemo-sdk${leapSdkVersion}-${name}.apk"
+        }
     }
 }
 
