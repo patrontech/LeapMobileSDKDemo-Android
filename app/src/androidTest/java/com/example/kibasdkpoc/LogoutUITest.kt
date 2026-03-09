@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
+import com.example.kibasdkpoc.webview.UrlProvider
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import org.junit.Rule
@@ -72,7 +73,7 @@ public class LogoutUITest {
 
     private fun setCookieForLoggedInUser() {
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            CookieManager.getInstance().setCookie(FANATICS_URL, "session=test")
+            CookieManager.getInstance().setCookie(UrlProvider.AUTH_URL, "session=test")
             CookieManager.getInstance().flush()
         }
     }

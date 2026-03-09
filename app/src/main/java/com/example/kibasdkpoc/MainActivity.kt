@@ -37,6 +37,8 @@ import com.example.kibasdkpoc.analytics.MyScreenViewEvent
 import com.example.kibasdkpoc.designsystem.DemoButtons
 import com.example.kibasdkpoc.designsystem.DemoHeaderText
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
+import com.example.kibasdkpoc.webview.UrlProvider
+import com.example.kibasdkpoc.webview.WebViewActivity
 import com.greencopper.leapmobilesdk.LeapMobileSDK
 import kotlinx.coroutines.launch
 
@@ -98,7 +100,7 @@ internal fun DeepLinkingList() {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_RESUME -> {
-                    val cookie = CookieManager.getInstance().getCookie(FANATICS_URL)
+                    val cookie = CookieManager.getInstance().getCookie(UrlProvider.AUTH_URL)
                     isUserLogged = cookie != null
                 }
 
