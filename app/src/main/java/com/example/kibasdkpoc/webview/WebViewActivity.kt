@@ -1,25 +1,21 @@
-package com.example.kibasdkpoc
+package com.example.kibasdkpoc.webview
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.webkit.CookieManager
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import com.example.kibasdkpoc.BuildConfig
 import com.example.kibasdkpoc.databinding.WebviewBinding
-
-private const val URL = "$FANATICS_URL&redirect_uri=https://fanatics-one.com/"
 
 public class WebViewActivity : ComponentActivity() {
     private val binding by lazy { WebviewBinding.inflate(layoutInflater) }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -29,21 +25,10 @@ public class WebViewActivity : ComponentActivity() {
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?, request: WebResourceRequest?
-            ): Boolean {
-                val url = request?.url.toString()
-                Log.d("WebViewActivity", "Intercepted navigation to: $url")
-                // Return true to block, false to allow navigation
-                // For example, block redirects to a specific domain:
-                if (url.contains("fanatics-one.com")) {
-                    finish()
-                    return true // Block navigation
-                }
-                return false // Allow navigation
-            }
-        }
+        webView.webViewClient = AuthWebViewClient(
+            redirectDomain = UrlProvider.REDIRECT_DOMAIN,
+            onRedirectDetected = { finish() },
+        )
         webView.settings.apply {
             layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
             loadWithOverviewMode = true
@@ -90,25 +75,15 @@ public class WebViewActivity : ComponentActivity() {
 //            }
 //        }
 
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                progressBar.progress = newProgress
-                if (newProgress == 100) {
-                    Log.d("WebViewActivity", "Page loaded, hiding progress bar")
-                    progressBar.visibility = View.GONE
-                } else {
-                    Log.d("WebViewActivity", "Loading progress: $newProgress%")
-                    progressBar.visibility = View.VISIBLE
-                }
-            }
-        }
+        webView.webChromeClient = AuthWebChromeClient(progressIndicator = progressBar)
 
         // Enable cookie sharing with LeapMobileSDK
+        // If LeapMobileSDK uses WebView, cookies will be shared via CookieManager
         val cookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)
         cookieManager.setAcceptThirdPartyCookies(webView, true)
-        // If LeapMobileSDK uses WebView, cookies will be shared via CookieManager
+        cookieManager.flush()
 
-        webView.loadUrl(URL)
+        webView.loadUrl(UrlProvider.authUrlWithRedirect)
     }
 }
