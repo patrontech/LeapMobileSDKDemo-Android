@@ -137,7 +137,7 @@ internal fun DeepLinkingList() {
                 modifier = Modifier.padding(top = 12.dp),
                 text = "SSO cookies POC",
             )
-            DemoButtons(buttonText = "Open Ticketing WebView") {
+            DemoButtons(buttonText = "Authentication WebView") {
                 val intent = Intent(context, WebViewActivity::class.java)
                 context.startActivity(intent)
             }

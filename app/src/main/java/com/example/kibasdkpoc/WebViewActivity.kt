@@ -1,5 +1,6 @@
 package com.example.kibasdkpoc
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ private const val URL = "$FANATICS_URL&redirect_uri=https://fanatics-one.com/"
 public class WebViewActivity : ComponentActivity() {
     private val binding by lazy { WebviewBinding.inflate(layoutInflater) }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -104,10 +106,11 @@ public class WebViewActivity : ComponentActivity() {
         }
 
         // Enable cookie sharing with LeapMobileSDK
+        // If LeapMobileSDK uses WebView, cookies will be shared via CookieManager
         val cookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)
         cookieManager.setAcceptThirdPartyCookies(webView, true)
-        // If LeapMobileSDK uses WebView, cookies will be shared via CookieManager
+        cookieManager.flush()
 
         webView.loadUrl(URL)
     }
