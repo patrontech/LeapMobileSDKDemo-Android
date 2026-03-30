@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/deeplink_scheme" />
+                <data android:scheme="@string/fanatics_deeplink_scheme" />
             </intent-filter>
         </activity>
 
@@ -53,6 +53,20 @@
             android:name=".webview.WebViewActivity"
             android:exported="false"
             android:theme="@style/Theme.KIBASDKPOC" />
+        <activity
+            android:name=".deeplink.DeepLinkActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KIBASDKPOC.NoToolbar">
+            <!-- Deeplinking -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/sample_app_deeplink_scheme" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
