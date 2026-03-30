@@ -48,7 +48,7 @@ qrScanner = "2.1.0"
 ui = "1.10.1"
 zip4j = "2.9.0"
 zxing = "3.4.1"
-leapmobilesdk = "0.0.4"
+leapmobilesdk = "0.0.5"
 materialVersion = "1.10.1"
 
 # UI
