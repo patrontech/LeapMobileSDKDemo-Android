@@ -1,6 +1,7 @@
 package com.example.kibasdkpoc
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,6 +55,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.kibasdkpoc.analytics.ButtonClickEvent
 import com.example.kibasdkpoc.analytics.MyScreenViewEvent
@@ -117,7 +121,7 @@ public class MainActivity : ComponentActivity() {
 
     private fun handleCameraPermissionResult(granted: Boolean) {
         if (!granted) {
-            Toast.makeText(
+            makeText(
                 this@MainActivity,
                 getString(R.string.camera_permission_required),
                 Toast.LENGTH_LONG
@@ -129,7 +133,7 @@ public class MainActivity : ComponentActivity() {
 
     private fun handleNotificationPermissionResult(granted: Boolean) {
         if (!granted) {
-            Toast.makeText(
+            makeText(
                 this@MainActivity,
                 getString(R.string.notification_permission_required),
                 Toast.LENGTH_LONG
@@ -143,26 +147,12 @@ public class MainActivity : ComponentActivity() {
 public fun MainScreen() {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val coroutineScope = rememberCoroutineScope()
 
     var isUserLogged by remember { mutableStateOf(false) }
 
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> {
-                    val cookie = CookieManager.getInstance().getCookie(UrlProvider.AUTH_URL)
-                    isUserLogged = cookie != null
-                }
-
-                else -> {}
-            }
-        }
-
-        lifecycleOwner.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
+    ObserveLoginStateOnResume(lifecycleOwner) {
+        isUserLogged = isLoggedIn(UrlProvider.AUTH_URL)
     }
 
     Scaffold(
@@ -174,53 +164,18 @@ public fun MainScreen() {
                 .padding(horizontal = 16.dp)
                 .padding(innerPadding)
         ) {
-            DeepLinkingList()
+            DeepLinkingSection()
+            SSOSection(context)
+            NotificationsSection()
 
-            DemoHeaderText(
-                modifier = Modifier.padding(top = 12.dp),
-                text = stringResource(R.string.sso_cookies_poc),
-            )
-            DemoButtons(buttonText = stringResource(R.string.authentication_webview)) {
-                val intent = Intent(context, WebViewActivity::class.java)
-                context.startActivity(intent)
-            }
+            StartSdkButton(context)
 
-            NotificationsMenu()
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            DemoButtons(
-                modifier = Modifier.padding(top = 32.dp),
-                buttonText = stringResource(R.string.start_sdk)
-            ) {
-                // Track Start SDK button click
-                LeapMobileSDK.track(
-                    ButtonClickEvent(buttonName = "Start SDK", screenName = "MainActivity")
-                )
-                context.startActivity(
-                    Intent(context, SdkActivity::class.java)
-                )
-            }
-
-            if (isUserLogged) {
-                val coroutineScope = rememberCoroutineScope()
-                val loggedOutMsg = stringResource(R.string.you_have_been_logged_out)
-
-                DemoButtons(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .testTag("logout_button"),
-                    buttonText = stringResource(R.string.logout)
-                ) {
-                    LeapMobileSDK.track(
-                        ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity")
-                    )
-
-                    coroutineScope.launch {
-                        LeapMobileSDK.logout()
-                        isUserLogged = false
-                        Toast.makeText(context, loggedOutMsg, Toast.LENGTH_SHORT).show()
-                    }
+            LogoutButton(isUserLogged) {
+                LeapMobileSDK.track(ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity"))
+                coroutineScope.launch {
+                    LeapMobileSDK.logout()
+                    isUserLogged = false
+                    makeText(context, R.string.you_have_been_logged_out, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -228,7 +183,24 @@ public fun MainScreen() {
 }
 
 @Composable
-internal fun DeepLinkingList() {
+private fun LogoutButton(
+    isUserLogged: Boolean,
+    onLoggedOut: () -> Unit,
+) {
+    if (!isUserLogged) return
+
+    DemoButtons(
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .testTag(MainScreenTestTags.LOGOUT_BUTTON),
+        buttonText = stringResource(R.string.logout)
+    ) {
+        onLoggedOut()
+    }
+}
+
+@Composable
+internal fun DeepLinkingSection() {
     val context = LocalContext.current
 
     DemoHeaderText(text = "Deep Link Examples")
@@ -245,9 +217,21 @@ internal fun DeepLinkingList() {
     }
 }
 
+@Composable
+private fun SSOSection(context: Context) {
+    DemoHeaderText(
+        modifier = Modifier.padding(top = 12.dp),
+        text = stringResource(R.string.sso_cookies_poc),
+    )
+    DemoButtons(buttonText = stringResource(R.string.authentication_webview)) {
+        val intent = Intent(context, WebViewActivity::class.java)
+        context.startActivity(intent)
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NotificationsMenu() {
+private fun NotificationsSection() {
     val context = LocalContext.current
     val dropDownList = buildList {
         add(Pair("Start SDK", R.string.start_sdk))
@@ -279,30 +263,7 @@ private fun NotificationsMenu() {
                 onValueChange = {},
                 readOnly = true,
             )
-
-            val notificationWithUriLbl = stringResource(R.string.creating_notification_with_uri, selectedUri.first)
-            val notificationTitleLbl = stringResource(R.string.host_app_notification)
-            val notificationBodyLbl = stringResource(R.string.click_to_start_deeplink, selectedUri.first)
-
-            DemoButtons(
-                buttonText = stringResource(R.string.create), modifier = Modifier
-                    .width(200.dp)
-                    .weight(1f)
-            ) {
-                Toast.makeText(
-                    context,
-                    notificationWithUriLbl,
-                    Toast.LENGTH_SHORT
-                ).show()
-                showNotification(
-                    context,
-                    title = notificationTitleLbl,
-                    body = notificationBodyLbl,
-                    intent = if (deeplinkUris.contains(selectedUri)) Intent(
-                        Intent.ACTION_VIEW, selectedUri.first.toUri()
-                    ) else Intent(context, SdkActivity::class.java)
-                )
-            }
+            CreateNotificationButton(context, selectedUri)
         }
         ExposedDropdownMenu(
             expanded = expanded,
@@ -314,6 +275,68 @@ private fun NotificationsMenu() {
                     expanded = false
                 })
             }
+        }
+    }
+    Spacer(modifier = Modifier.height(32.dp))
+}
+
+@Composable
+private fun StartSdkButton(context: Context) {
+    DemoButtons(
+        modifier = Modifier.padding(top = 32.dp),
+        buttonText = stringResource(R.string.start_sdk)
+    ) {
+        // Track Start SDK button click
+        LeapMobileSDK.track(
+            ButtonClickEvent(buttonName = "Start SDK", screenName = "MainActivity")
+        )
+        context.startActivity(
+            Intent(context, SdkActivity::class.java)
+        )
+    }
+}
+
+@Composable
+private fun RowScope.CreateNotificationButton(
+    context: Context,
+    selectedUri: Pair<String, Int>
+) {
+    DemoButtons(
+        buttonText = stringResource(R.string.create), modifier = Modifier
+            .width(200.dp)
+            .weight(1f)
+    ) {
+        makeText(
+            context,
+            context.getString(R.string.creating_notification_with_uri, selectedUri.first),
+            Toast.LENGTH_SHORT
+        ).show()
+        showNotification(
+            context,
+            title = context.getString(R.string.host_app_notification),
+            body = context.getString(R.string.click_to_start_deeplink, selectedUri.first),
+            intent = if (deeplinkUris.contains(selectedUri)) Intent(
+                Intent.ACTION_VIEW, selectedUri.first.toUri()
+            ) else Intent(context, SdkActivity::class.java)
+        )
+    }
+}
+
+@Composable
+private fun ObserveLoginStateOnResume(
+    lifecycleOwner: LifecycleOwner,
+    onResume: () -> Unit
+) {
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                onResume()
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 }
@@ -348,21 +371,18 @@ private fun showNotification(context: Context, title: String, body: String, inte
  */
 private fun isLoggedIn(authUrl: String): Boolean {
     val cookie = CookieManager.getInstance().getCookie(authUrl)
-
     if (cookie.isNullOrBlank()) return false
 
-    return cookie.split(";").map { it.trim() }.any { cookiePair ->
-        val eqIndex = cookiePair.indexOf('=')
-        if (eqIndex <= 0) return@any false
-        val name = cookiePair.substring(0, eqIndex).trim()
-        name == "sat" || name == "fid-sc"
+    return cookie.split(";").any { pair ->
+        val parts = pair.trim().split("=", limit = 2)
+        parts.size == 2 && (parts[0] == "sat" || parts[0] == "fid-sc")
     }
 }
 
 @Preview
 @Composable
-private fun DeepLinkingListPreview() {
+private fun DeepLinkingSectionPreview() {
     KibaSdkPocTheme {
-        DeepLinkingList()
+        DeepLinkingSection()
     }
 }
