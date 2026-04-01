@@ -75,6 +75,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.activity)
+    implementation(libs.compose.fragment)
+    implementation(libs.compose.lifecycleViewModel)
     implementation(libs.androidx.appCompat)
 
 

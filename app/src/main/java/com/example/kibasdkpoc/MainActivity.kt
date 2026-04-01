@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
+import android.widget.Space
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.activity.ComponentActivity
@@ -58,6 +59,8 @@ import com.example.kibasdkpoc.designsystem.DemoButtons
 import com.example.kibasdkpoc.designsystem.DemoHeaderText
 import com.example.kibasdkpoc.designsystem.lifecycle.ObserveLifecycleEvents
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
+import com.example.kibasdkpoc.ui.SdkActivity
+import com.example.kibasdkpoc.ui.SdkComposeNavigationActivity
 import com.example.kibasdkpoc.webview.UrlProvider
 import com.example.kibasdkpoc.webview.WebViewActivity
 import com.greencopper.leapmobilesdk.LeapMobileSDK
@@ -165,6 +168,8 @@ public fun MainScreen() {
             NotificationsSection()
 
             StartSdkButton(context)
+
+            StartComposeSdkButton(context)
 
             LogoutButton(isUserLogged) {
                 LeapMobileSDK.track(ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity"))
@@ -279,7 +284,6 @@ private fun NotificationsSection() {
 @Composable
 private fun StartSdkButton(context: Context) {
     DemoButtons(
-        modifier = Modifier.padding(top = 32.dp),
         buttonText = stringResource(R.string.start_sdk)
     ) {
         // Track Start SDK button click
@@ -288,6 +292,21 @@ private fun StartSdkButton(context: Context) {
         )
         context.startActivity(
             Intent(context, SdkActivity::class.java)
+        )
+    }
+}
+
+@Composable
+private fun StartComposeSdkButton(context: Context) {
+    DemoButtons(
+        buttonText = stringResource(R.string.start_compose_sdk)
+    ) {
+        // Track Start SDK button click
+        LeapMobileSDK.track(
+            ButtonClickEvent(buttonName = "Start Compose Navigation SDK", screenName = "MainActivity")
+        )
+        context.startActivity(
+            Intent(context, SdkComposeNavigationActivity::class.java)
         )
     }
 }

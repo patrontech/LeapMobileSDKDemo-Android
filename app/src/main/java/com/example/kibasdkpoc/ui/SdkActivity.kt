@@ -1,4 +1,4 @@
-package com.example.kibasdkpoc
+package com.example.kibasdkpoc.ui
 
 import android.net.Uri
 import android.os.Build
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import com.example.kibasdkpoc.R
 import com.example.kibasdkpoc.analytics.MyScreenViewEvent
 import com.example.kibasdkpoc.databinding.MainBinding
 import com.greencopper.leapmobilesdk.LeapMobileSDK
@@ -119,9 +120,7 @@ public class SdkActivity : FragmentActivity() {
     }
 
     private fun setupEdgeToEdge() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            enableEdgeToEdge()
-        }
+        enableEdgeToEdge()
     }
 
     private fun setupInsets() {
