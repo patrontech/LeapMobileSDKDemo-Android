@@ -1,7 +1,6 @@
 package com.example.kibasdkpoc.ui
 
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -27,8 +26,10 @@ public class SdkActivity : FragmentActivity() {
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupEdgeToEdge()
+        enableEdgeToEdge()
+
         super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
         setupInsets()
         setupBackNavigation()
@@ -117,10 +118,6 @@ public class SdkActivity : FragmentActivity() {
         // Track screen view using the fragment class simple name
         val screenName = fragment::class.java.simpleName ?: "unknown_screen"
         LeapMobileSDK.track(MyScreenViewEvent(screenName))
-    }
-
-    private fun setupEdgeToEdge() {
-        enableEdgeToEdge()
     }
 
     private fun setupInsets() {
