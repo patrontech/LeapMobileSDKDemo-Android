@@ -34,11 +34,11 @@ public class LogoutUITest {
 
         composeTestRule.setContent {
             KibaSdkPocTheme {
-                DeepLinkingList()
+                DeepLinkingSection()
             }
         }
 
-        composeTestRule.onNodeWithTag("logout_button").assertExists()
+        composeTestRule.onNodeWithTag(MainScreenTestTags.LOGOUT_BUTTON).assertExists()
     }
 
     @Test
@@ -47,11 +47,11 @@ public class LogoutUITest {
 
         composeTestRule.setContent {
             KibaSdkPocTheme {
-                DeepLinkingList()
+                DeepLinkingSection()
             }
         }
 
-        composeTestRule.onNodeWithTag("logout_button").assertDoesNotExist()
+        composeTestRule.onNodeWithTag(MainScreenTestTags.LOGOUT_BUTTON).assertDoesNotExist()
     }
 
     @Test
@@ -60,15 +60,15 @@ public class LogoutUITest {
 
         composeTestRule.setContent {
             KibaSdkPocTheme {
-                DeepLinkingList()
+                DeepLinkingSection()
             }
         }
 
-        composeTestRule.onNodeWithTag("logout_button").assertExists()
-        composeTestRule.onNodeWithTag("logout_button").performClick()
+        composeTestRule.onNodeWithTag(MainScreenTestTags.LOGOUT_BUTTON).assertExists()
+        composeTestRule.onNodeWithTag(MainScreenTestTags.LOGOUT_BUTTON).performClick()
 
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag("logout_button").assertDoesNotExist()
+        composeTestRule.onNodeWithTag(MainScreenTestTags.LOGOUT_BUTTON).assertDoesNotExist()
     }
 
     private fun setCookieForLoggedInUser() {
