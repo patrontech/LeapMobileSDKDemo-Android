@@ -19,6 +19,7 @@ import com.greencopper.leapmobilesdk.LeapMobileSDK
 import com.greencopper.leapmobilesdk.interfacekit.navigation.NavigationController
 import com.greencopper.leapmobilesdk.interfacekit.rootview.RootLayoutHolder
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 public class SdkActivity : FragmentActivity() {
 
@@ -74,23 +75,40 @@ public class SdkActivity : FragmentActivity() {
     }
 
     private fun handleDeeplink() {
-        try {
-            val intentData = intent.data
-            val fragment = LeapMobileSDK.resolveDeeplink(intentData ?: Uri.EMPTY)
+        val intentData = intent.data
 
-            if (intentData != null && fragment != null) {
+        val fragment = runCatching {
+            LeapMobileSDK.resolveDeeplink(intentData ?: Uri.EMPTY)
+        }.getOrNull()
+
+        if (intentData != null && fragment != null) {
+            runCatching {
                 replaceView(fragment)
-            } else {
-                lifecycleScope.launch {
-                    LeapMobileSDK.getRootLayout(supportFragmentManager).collect { fragment ->
-                        replaceView(fragment)
+            }.onFailure {
+                if (it is IllegalStateException) {
+                    showErrorAndFinish(it)
+                }
+            }
+        } else {
+            lifecycleScope.launch {
+                runCatching {
+                    LeapMobileSDK
+                        .getRootLayout(supportFragmentManager)
+                        .collect { fragment ->
+                            replaceView(fragment)
+                        }
+                }.onFailure {
+                    if (it !is CancellationException) {
+                        showErrorAndFinish(it)
                     }
                 }
             }
-        } catch (ex: Exception) {
-            Toast.makeText(this, ex.message, Toast.LENGTH_SHORT).show()
-            finish()
         }
+    }
+
+    private fun showErrorAndFinish(e: Throwable) {
+        Toast.makeText(this, e.message ?: "Unexpected error", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun replaceView(fragment: Fragment) {

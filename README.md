@@ -9,12 +9,14 @@
 ---
 
 ## Setting up the project to download the SDK
+
 Currently the SDK is hosted as a [GitHub Package](https://github.com/patrontech/LeapMobileSDK-Android/packages/2818095) inside the [repository](https://github.com/patrontech/LeapMobileSDK-Android).  
 This means that only those with access to the repository can download the package using their git username and token.  
 To generate a token, go to your GitHub settings -> Developer Settings -> Personal Access Tokens -> Tokens (classic) -> Generate new token.
 You can also click here: [Generate GitHub Token](https://github.com/settings/tokens/new)
 Make sure to give it at least the `read:packages` scope.  
 Then, add the following to your `build.gradle.kts` file in the root of your project:
+
 ```kotlin
 allprojects {
     repositories {
@@ -112,6 +114,7 @@ fun initialize(
     metrics: MappedProvider? = null,
 )
 ```
+
 - Call `initialize` once before accessing the SDK, ideally in an Application class. Depending on how much content there is, and if there's an OTA update to process, initialization can be costly.
 - LoggingConfiguration: Anything logged by the SDK is sent to the LoggingConfigurations provided. ConsoleLoggingConfiguration is a good default one to use.
 - MappedProvider: Any analytics tracked by the SDK are sent to the MappedProviders.
