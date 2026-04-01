@@ -130,7 +130,7 @@ class AppHostApplication : Application() {
 }
 ```
 
-Without this, SDK APIs used in `SdkActivity` may not behave correctly.
+Without this, SDK APIs used in your host Activity (for example `SdkActivity` or `SdkComposeNavigationActivity`) may not behave correctly.
 
 ---
 
@@ -167,15 +167,17 @@ Register the Activity that will host the SDK and handle VIEW intents for your cu
 </activity>
 ```
 
-- **`android:name`** — Your SDK host Activity (e.g. `SdkActivity`).
+- **`android:name`** — Your SDK host Activity (e.g. `SdkActivity` for the Fragment-based flow, or `SdkComposeNavigationActivity` for Jetpack Compose).
 - **`android:parentActivityName`** — Activity to go back to (e.g. `MainActivity`).
 - **`<data android:scheme="...">`** — Must match the `fanaticssdkstaging` scheme. Note that the deeplink_scheme is already a defined string resource in the SDK.
 
-The **launcher** Activity (e.g. `MainActivity`) stays as the `MAIN` / `LAUNCHER` entry point; from there you can start `SdkActivity` or send VIEW intents with your scheme to open the SDK via deeplink.
+The **launcher** Activity (e.g. `MainActivity`) stays as the `MAIN` / `LAUNCHER` entry point; from there you can start your SDK host Activity or send `VIEW` intents with your scheme to open the SDK via deeplink.
 
 ---
 
-## SdkActivity
+## SdkActivity — Fragment integration
+
+**Use this path when you integrate with the traditional Android View system and Fragments.** The SDK’s root UI is a `Fragment`; this Activity owns a container and performs fragment transactions, deeplink resolution, and back handling.
 
 The Activity that hosts the SDK must:
 
@@ -207,21 +209,45 @@ fun getRootLayout(fragmentManager: FragmentManager): Flow<Layout>
 
 Plus Android/AndroidX for Activity, Fragment, `lifecycleScope`, and the container view.
 
-In short: **manifest** (Application + SdkActivity with correct scheme), **Application** (`LeapMobileSDK.initialize`), and **SdkActivity** (container + deeplink/root resolution + back handling) are the three pieces needed to run the SDK correctly.
+In short: **manifest** (Application + an SDK host Activity with the correct scheme), **Application** (`LeapMobileSDK.initialize`), and either **SdkActivity** (Fragment container + deeplink/root resolution + back handling) or **SdkComposeNavigationActivity** (Compose + `LeapMobileSDK.Content`; see **SdkComposeNavigationActivity — Compose integration** below) are what you need to run the SDK correctly.
 
 ---
 
-## Compose and Fragment Compatibility
+## SdkComposeNavigationActivity — Compose integration
 
-Jetpack Compose and Fragments are built on different UI paradigms, which can lead to incompatibility and integration issues:
+**Use this path when you integrate with Jetpack Compose.** The SDK exposes a Compose entry point, `LeapMobileSDK.Content`, so you do not need a `FragmentContainerView` or manual fragment transactions for the root SDK UI.
 
-- **Lifecycle Management:** Compose manages its own lifecycle and recomposition, while Fragments rely on the traditional View system. Mixing them can cause unexpected behavior, especially with navigation and state restoration.
-- **Recomposition Issues:** Compose UI can recompose at any time, which may interfere with Fragment transactions or cause Fragments to be recreated unexpectedly.
-- **View Hierarchy:** Fragments expect to be attached to a ViewGroup (like FrameLayout or FragmentContainerView). Compose does not provide a direct equivalent, so inflating Fragments inside Compose layouts is not recommended.
-- **Navigation Conflicts:** Compose navigation and Fragment navigation can conflict, leading to back stack issues or navigation bugs.
+The sample `SdkComposeNavigationActivity`:
 
-**Best Practice:**
+1. Extends **`FragmentActivity`** (same as other SDK activities in this project).
+2. Calls **`setContent { ... }`** and places **`LeapMobileSDK.Content`** in your composable tree (wrapped in your app theme as needed).
+3. Passes:
+   - **`modifier`** — typically `Modifier.fillMaxSize()` so the SDK fills the screen.
+   - **`deeplink`** — optional `Uri` when the user opened the app via your scheme (e.g. build from `intent.data` in `onCreate` / `onNewIntent` after `setIntent(intent)`).
+   - **`onBack`** — invoked when the user navigates back inside the SDK; commonly `finish()` the Activity.
+   - **`showBackButton`** — whether to show the SDK’s back affordance when applicable.
 
-For SDKs or libraries that require Fragments (such as LeapMobileSDK), always create a dedicated Activity that hosts a `FrameLayout` or `FragmentContainerView`. This container should be used to inflate and display Fragments. Avoid mixing Compose UI and Fragment transactions in the same layout to prevent lifecycle and navigation problems.
+Example shape (see `SdkComposeNavigationActivity` and `LeapSdkScreen` in the demo app):
 
-This approach ensures predictable behavior, proper back stack management, and compatibility with SDKs that rely on Fragments.
+```kotlin
+setContent {
+    YourAppTheme {
+        LeapMobileSDK.Content(
+            modifier = Modifier.fillMaxSize(),
+            deeplink = intent.data, // or null if not a deeplink launch
+            onBack = { finish() },
+            showBackButton = true,
+        )
+    }
+}
+
+override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    setIntent(intent)
+    // Recomposition can pick up the new intent if you pass intent.data into Content
+}
+```
+
+Register this Activity in the manifest the same way as `SdkActivity`: **`VIEW`** intent filter with your **`android:scheme`**, **`singleTask`** if you want one task for deeplinks, and **`parentActivityName`** for Up navigation.
+
+For **Fragment integration**, use **SdkActivity** above instead.
