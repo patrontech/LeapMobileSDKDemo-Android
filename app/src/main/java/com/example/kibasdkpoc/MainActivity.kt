@@ -1,7 +1,6 @@
 package com.example.kibasdkpoc
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -35,7 +34,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,15 +51,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.kibasdkpoc.analytics.ButtonClickEvent
 import com.example.kibasdkpoc.analytics.MyScreenViewEvent
 import com.example.kibasdkpoc.deeplink.deeplinkUris
 import com.example.kibasdkpoc.designsystem.DemoButtons
 import com.example.kibasdkpoc.designsystem.DemoHeaderText
+import com.example.kibasdkpoc.designsystem.lifecycle.ObserveLifecycleEvents
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
 import com.example.kibasdkpoc.webview.UrlProvider
 import com.example.kibasdkpoc.webview.WebViewActivity
@@ -146,14 +141,15 @@ public class MainActivity : ComponentActivity() {
 @Composable
 public fun MainScreen() {
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
     var isUserLogged by remember { mutableStateOf(false) }
 
-    ObserveLoginStateOnResume(lifecycleOwner) {
-        isUserLogged = isLoggedIn(UrlProvider.AUTH_URL)
-    }
+    ObserveLifecycleEvents(
+        onResume = {
+            isUserLogged = isLoggedIn(UrlProvider.AUTH_URL)
+        }
+    )
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -319,25 +315,6 @@ private fun RowScope.CreateNotificationButton(
                 Intent.ACTION_VIEW, selectedUri.first.toUri()
             ) else Intent(context, SdkActivity::class.java)
         )
-    }
-}
-
-@Composable
-private fun ObserveLoginStateOnResume(
-    lifecycleOwner: LifecycleOwner,
-    onResume: () -> Unit
-) {
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                onResume()
-            }
-        }
-
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
     }
 }
 
