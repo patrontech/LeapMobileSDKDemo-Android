@@ -16,6 +16,7 @@
     <string name="authentication_webview">Authentication WebView</string>
     <string name="open_bottom_sheet_sampleapp">Open Bottom Sheet (sampleapp)</string>
     <string name="start_sdk">Start SDK</string>
+    <string name="start_compose_sdk">Start Compose Navigation SDK</string>
 
     <!-- DeepLinkActivity -->
     <string name="deep_link_tests">Deeplink Tests</string>
