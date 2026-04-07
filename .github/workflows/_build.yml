@@ -24,8 +24,8 @@ jobs:
       - name: Build APK
         run: |
           if [ "${{ github.ref_name }}" == "master" ]; then
-            echo "Building prod APK"
-            ./gradlew assembleProd -PciVersionCode=${{ github.run_number }}
+            echo "Building release APK"
+            ./gradlew assembleRelease -PciVersionCode=${{ github.run_number }}
           else
             echo "Building debug APK"
             ./gradlew assembleDebug -PciVersionCode=${{ github.run_number }}
@@ -38,7 +38,7 @@ jobs:
         id: apk_dir
         run: |
           if [ "${{ github.ref_name }}" == "master" ]; then
-            apkDir="app/build/outputs/apk/prod"
+            apkDir="app/build/outputs/apk/release"
           else
             apkDir="app/build/outputs/apk/debug"
           fi

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -14,7 +15,9 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import com.example.kibasdkpoc.deeplink.DEEPLINK_SCHEME
 import com.example.kibasdkpoc.theme.KibaSdkPocTheme
+import com.example.kibasdkpoc.theme.attrColorResource
 import com.greencopper.leapmobilesdk.LeapMobileSDK
+import com.greencopper.leapmobilesdk.R
 import com.greencopper.leapmobilesdk.compose.Content
 
 public class SdkComposeNavigationActivity : FragmentActivity() {
@@ -29,6 +32,7 @@ public class SdkComposeNavigationActivity : FragmentActivity() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .background(attrColorResource(R.attr.customStatusAndBottomBarColor))
                         .statusBarsPadding(),
                 ) {
                     LeapSdkScreen()
