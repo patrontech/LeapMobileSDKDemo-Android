@@ -1,9 +1,13 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
     alias(libs.plugins.conventions.kiba.app)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinCompose)
 }
+
+val leapSdkVersion: String = libs.versions.leapmobilesdk.get()
 
 android {
     namespace = "com.example.kibasdkpoc"
@@ -20,21 +24,19 @@ android {
     }
 
     buildTypes {
+		debug {
+			isMinifyEnabled = false
+
+			signingConfig = signingConfigs.getByName("debug")
+			matchingFallbacks += listOf("debug")
+		}
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        create("prod") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             matchingFallbacks += listOf("release")
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -45,8 +47,16 @@ android {
         jvmToolchain(17)
     }
     buildFeatures {
+		buildConfig = true
         compose = true
         viewBinding = true
+    }
+
+    applicationVariants.configureEach {
+        outputs.configureEach {
+            (this as BaseVariantOutputImpl).outputFileName =
+                "LeapDemo-sdk${leapSdkVersion}-${name}.apk"
+        }
     }
 }
 
@@ -65,6 +75,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.activity)
+    implementation(libs.compose.fragment)
+    implementation(libs.compose.lifecycleViewModel)
     implementation(libs.androidx.appCompat)
 
 
@@ -88,5 +100,16 @@ dependencies {
     implementation(libs.zxing)
     implementation(libs.fuzzywuzzy)
     implementation(libs.sharpSVG)
+	implementation(libs.androidx.webkit)
 
+	// Compose UI testing
+	androidTestImplementation(platform(libs.compose.bom))
+	androidTestImplementation(libs.test.composeUiJunit4)
+	debugImplementation(libs.test.composeManifest)
+}
+
+configurations.all {
+	resolutionStrategy {
+		force("androidx.webkit:webkit:1.11.0")
+	}
 }

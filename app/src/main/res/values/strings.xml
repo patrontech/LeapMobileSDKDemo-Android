@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">KIBA SDK POC</string>
+
+    <!-- MainActivity -->
+    <string name="camera_permission_required">Camera permission is required for the SDK to function properly.</string>
+    <string name="notification_permission_required">Notification permission is required to receive notifications from the SDK.</string>
+    <string name="logout">Logout</string>
+    <string name="you_have_been_logged_out">You have been logged out.</string>
+    <string name="notifications">Notifications</string>
+    <string name="create">Create</string>
+    <string name="creating_notification_with_uri">Creating notification with URI: %s</string>
+    <string name="host_app_notification">Host App Notification</string>
+    <string name="click_to_start_deeplink">Click to start the following deeplink: %s</string>
+    <string name="deep_link_examples">Deep Link Examples</string>
+    <string name="sso_cookies_poc">SSO cookies POC</string>
+    <string name="authentication_webview">Authentication WebView</string>
+    <string name="open_bottom_sheet_sampleapp">Open Bottom Sheet (sampleapp)</string>
+    <string name="start_sdk">Start SDK</string>
+    <string name="start_compose_sdk">Start Compose Navigation SDK</string>
+
+    <!-- DeepLinkActivity -->
+    <string name="deep_link_tests">Deeplink Tests</string>
+    <string name="dismiss">Dismiss</string>
+
+    <!-- Deeplink labels -->
+    <string name="schedule">Schedule</string>
+    <string name="talents">Talents</string>
+    <string name="brands">Brands</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="registration">Registration</string>
+    <string name="badges">Badges</string>
+    <string name="invalid">Invalid</string>
 </resources>

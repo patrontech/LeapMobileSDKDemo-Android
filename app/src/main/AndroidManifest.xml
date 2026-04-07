@@ -3,8 +3,13 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="true" />
+
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".SdkPocApplication"
@@ -17,11 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KIBASDKPOC">
         <activity
-            android:name=".SdkActivity"
+            android:name=".ui.SdkActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.KIBASDKPOC">
+            android:theme="@style/Theme.KIBASDKPOC.NoToolbar">
 
             <!--Deeplinking-->
             <intent-filter>
@@ -30,18 +35,54 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/deeplink_scheme" />
+                <data android:scheme="@string/fanatics_deeplink_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.SdkComposeNavigationActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.KIBASDKPOC.NoToolbar">
+
+            <!-- Deeplinking -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fanatics_deeplink_scheme" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"
             android:exported="true"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.KIBASDKPOC">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".webview.WebViewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.KIBASDKPOC" />
+        <activity
+            android:name=".deeplink.DeepLinkActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KIBASDKPOC.NoToolbar">
+            <!-- Deeplinking -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/sample_app_deeplink_scheme" />
             </intent-filter>
         </activity>
     </application>

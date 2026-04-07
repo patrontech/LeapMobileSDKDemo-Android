@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="status_and_bottom_bar_sdk_activity_light">#121212</color>
+    <color name="status_and_bottom_bar_sdk_activity_dark">@color/black</color>
     <!-- Fallback background color for edge-to-edge (matches SDK's typical dark theme) -->
     <color name="sdk_fallback_background">#FF1A1A1A</color>
 </resources>
