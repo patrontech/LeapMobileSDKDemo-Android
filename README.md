@@ -251,3 +251,65 @@ override fun onNewIntent(intent: Intent) {
 Register this Activity in the manifest the same way as `SdkActivity`: **`VIEW`** intent filter with your **`android:scheme`**, **`singleTask`** if you want one task for deeplinks, and **`parentActivityName`** for Up navigation.
 
 For **Fragment integration**, use **SdkActivity** above instead.
+
+---
+
+## Analytics Integration
+
+The Leap Mobile SDK provides a comprehensive analytics data layer that exposes all user interactions and screen views through a delegation pattern. This allows container apps to receive analytics events from the SDK and forward them to their own analytics stack (Firebase, internal tools, third-party services, etc.).
+
+**Key Principle**: The SDK **emits** analytics events but does **not** send them to any external service directly. The container app is responsible for receiving, processing, and routing these events.
+
+### Quick Start
+
+For a quick integration guide, see [ANALYTICS_QUICK_START.md](ANALYTICS_QUICK_START.md). This guide will help you get started with analytics integration in just a few minutes.
+
+### Complete Documentation
+
+For comprehensive documentation including:
+
+- Detailed architecture overview
+- Complete event catalog
+- Best practices and troubleshooting
+- Privacy and compliance guidelines
+
+See [ANALYTICS_INTEGRATION.md](ANALYTICS_INTEGRATION.md).
+
+### Basic Integration
+
+To integrate analytics, you need to:
+
+1. Implement the `MappedProvider` interface to receive analytics events
+2. Register your provider during SDK initialization using the `metrics` parameter
+3. Your provider will automatically receive all analytics events from the SDK
+
+Example:
+
+```kotlin
+class MyAnalyticsProvider : MappedProvider { 
+    override val name: Provider = Provider("my_provider")
+    
+    override fun track(event: EventName, parameters: Map<EventParameter, String>) { 
+        // Forward events to your analytics system 
+    }
+    
+    override fun track(parameters: Map<UserProperty, String>) { 
+        // Handle user properties 
+    }
+    
+    override fun enable() {}
+    override fun disable() {}
+}
+
+// In your Application class:
+LeapMobileSDK.initialize(
+    context = this, 
+    metrics = MyAnalyticsProvider()
+)
+```
+
+## Logging & Health Monitoring
+
+The SDK exposes a logging layer so the container app can receive all SDK logs and errors and forward them to its own logging, crash reporting, and observability tools. The SDK does **not** send logs to any external service.
+
+For documentation (integration, best practices, health monitoring, troubleshooting), see [LOGGING_INTEGRATION.md](LOGGING_INTEGRATION.md).
