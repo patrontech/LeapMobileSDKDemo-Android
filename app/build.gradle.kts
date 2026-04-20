@@ -66,6 +66,10 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
 
+    // Leap Mobile SDK — all internal deps now resolve transitively via the POM
+    implementation(libs.leapmobilesdk)
+    implementation(libs.qrScanner)
+
     // Compose UI dependencies
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
@@ -79,28 +83,8 @@ dependencies {
     implementation(libs.compose.lifecycleViewModel)
     implementation(libs.androidx.appCompat)
 
-
-    // Leap Mobile SDK
-    implementation(libs.leapmobilesdk)
-    implementation(libs.qrScanner)
-    implementation(libs.kiba.parsimonious)
-
-    // SDKs needed to make the app properly run
-    implementation(libs.retrofit)
-    implementation(libs.retrofitSerializationConverter)
-    implementation(libs.okHttp)
-    implementation(libs.okHttpLoggingInterceptor)
-    implementation(libs.androidx.security)
-    implementation(libs.androidx.datastore)
-    implementation(libs.androidx.work)
-    implementation(libs.androidx.recyclerView)
-    implementation(libs.kotlinReflect)
-    implementation(libs.zip4j)
-    implementation(libs.komposable)
-    implementation(libs.zxing)
-    implementation(libs.fuzzywuzzy)
-    implementation(libs.sharpSVG)
-	implementation(libs.androidx.webkit)
+    // Webkit
+    implementation(libs.androidx.webkit)
 
 	// Compose UI testing
 	androidTestImplementation(platform(libs.compose.bom))

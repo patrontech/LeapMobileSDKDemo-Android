@@ -7,6 +7,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+tasks.named("clean") {
+    mustRunAfter(tasks.matching { it.name != "clean" })
+}
+
 dependencies {
     implementation(libs.gradle)
     implementation(libs.kotlinGradle)
