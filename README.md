@@ -50,7 +50,9 @@ These are the imports (dependencies) used by the app and the Leap Mobile SDK. In
 
 ```kotlin
 dependencies {
+    // Leap Mobile SDK
     implementation("tech.leapevent:mobile-sdk:{{ latest version }}")
+    // Code Scanner library
     implementation("com.code-scanner:library:{{ latest version }}")
 }
 ```
