@@ -66,8 +66,9 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
 
-    // Leap Mobile SDK — all internal deps now resolve transitively via the POM
-    implementation(libs.leapmobilesdk)
+    implementation(libs.leapmobilesdk.core)
+    // Fanatics bundle (same version as mobile-sdk-core). Remove if the app provides assets under content/ itself.
+    implementation(libs.leapmobilesdk.fanaticsBundle)
     implementation(libs.qrScanner)
 
     // Compose UI dependencies

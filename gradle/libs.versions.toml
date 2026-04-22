@@ -48,7 +48,7 @@ qrScanner = "2.1.0"
 ui = "1.10.1"
 zip4j = "2.9.0"
 zxing = "3.4.1"
-leapmobilesdk = "0.0.7"
+leapmobilesdk = "0.0.8"
 materialVersion = "1.10.1"
 
 # UI
@@ -135,7 +135,8 @@ google-ads = { group = "com.google.android.gms", name = "play-services-ads", ver
 google-appReview = { group = "com.google.android.play", name = "review", version.ref = "google-inAppReview" }
 google-appReviewKtx = { group = "com.google.android.play", name = "review-ktx", version.ref = "google-inAppReview" }
 
-leapmobilesdk = { group = "tech.leapevent", name = "mobile-sdk", version.ref = "leapmobilesdk" }
+leapmobilesdk-core = { group = "tech.leapevent", name = "mobile-sdk-core", version.ref = "leapmobilesdk" }
+leapmobilesdk-fanaticsBundle = { group = "tech.leapevent", name = "mobile-sdk-fanatics-bundle", version.ref = "leapmobilesdk" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
