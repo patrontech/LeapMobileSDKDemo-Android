@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.activity)
     implementation(libs.compose.fragment)
+    implementation(libs.compose.navigation)
     implementation(libs.compose.lifecycleViewModel)
     implementation(libs.androidx.appCompat)
 

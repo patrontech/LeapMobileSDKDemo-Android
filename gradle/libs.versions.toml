@@ -25,6 +25,7 @@ compose-material = "1.4.0"
 compose-compiler = "1.5.15"
 compose-constraintLayout = "1.1.1"
 compose-fragment = "1.8.9"
+compose-navigation = "2.9.7"
 coroutines = "1.8.1"
 komposable = "1.0.0-preview04"
 firebase-bom = "34.1.0"
@@ -48,7 +49,7 @@ qrScanner = "2.1.0"
 ui = "1.10.1"
 zip4j = "2.9.0"
 zxing = "3.4.1"
-leapmobilesdk = "0.0.7"
+leapmobilesdk = "0.0.8"
 materialVersion = "1.10.1"
 
 # UI
@@ -112,6 +113,7 @@ compose-material = { group = "androidx.compose.material", name = "material" }
 compose-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraintLayout" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activityKtx" }
 compose-fragment = { group = "androidx.fragment", name = "fragment-compose", version.ref = "compose-fragment" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 
 coroutinesCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutinesAndroid = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
