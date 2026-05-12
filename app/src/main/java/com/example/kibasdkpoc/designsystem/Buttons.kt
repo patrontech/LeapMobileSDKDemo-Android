@@ -3,12 +3,16 @@ package com.example.kibasdkpoc.designsystem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,15 +46,19 @@ public fun DemoFloatingButton(
 	buttonText: String,
 	onClick: () -> Unit,
 ) {
-	FloatingActionButton(
-		modifier = modifier
-			.padding(horizontal = 4.dp),
+	Button(
+		modifier = modifier.size(44.dp),
 		onClick = onClick,
+		shape = CircleShape,
+		contentPadding = PaddingValues(2.dp),
+		colors = ButtonDefaults.buttonColors(
+			containerColor = Color.Black,
+			contentColor = Color.White,
+		),
 	) {
-		Text(
-			modifier = Modifier
-				.padding(horizontal = 8.dp),
-			text = buttonText,
+		Icon(
+			imageVector = Icons.Default.AccountCircle,
+			contentDescription = buttonText,
 		)
 	}
 }
@@ -77,9 +85,11 @@ public fun BackButtonOverlay(
 @Composable
 private fun DemoButtonsPreview() {
 	KibaSdkPocTheme {
-		DemoButtons(
-			buttonText = "Test Button",
-			onClick = { /* Do nothing */ },
-		)
+		Column {
+			DemoFloatingButton(
+				buttonText = "Account",
+				onClick = { /* Do nothing */ },
+			)
+		}
 	}
 }

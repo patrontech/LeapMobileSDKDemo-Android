@@ -12,17 +12,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -54,8 +50,6 @@ public class SdkComposeNavigationActivity : ComponentActivity() {
 
         setContent {
             KibaSdkPocTheme {
-                var backStackDepth by remember { mutableIntStateOf(0) }
-                var isAtRoot by remember { mutableStateOf(true) }
 
                 Box(
                     modifier = Modifier
@@ -73,11 +67,7 @@ public class SdkComposeNavigationActivity : ComponentActivity() {
                             LeapSdkScreen(
                                 onNavigateToScreenTwo = {
                                     navController.navigate(Routes.SCREEN_TWO)
-                                },
-                                onBackStackChanged = { isRoot, depth ->
-                                    isAtRoot = isRoot
-                                    backStackDepth = depth
-                                },
+                                }
                             )
                         }
                         composable(Routes.SCREEN_TWO) {
@@ -85,22 +75,6 @@ public class SdkComposeNavigationActivity : ComponentActivity() {
                                 onBack = { navController.popBackStack() },
                             )
                         }
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = 8.dp)
-                            .background(Color.LightGray.copy(alpha = 0.7f)),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.sdk_depth_format, backStackDepth, isAtRoot),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(8.dp),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
                     }
                 }
             }
@@ -116,8 +90,7 @@ public class SdkComposeNavigationActivity : ComponentActivity() {
 @Composable
 public fun LeapSdkScreen(
     deeplinkPath: String? = null,
-    onNavigateToScreenTwo: () -> Unit = {},
-    onBackStackChanged: ((isRoot: Boolean, depth: Int) -> Unit),
+    onNavigateToScreenTwo: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val activity = LocalActivity.current
@@ -125,6 +98,8 @@ public fun LeapSdkScreen(
         "$DEEPLINK_SCHEME://$path".toUri()
     }
     val deeplinkScheme = stringResource(SdkR.string.sample_app_deeplink_scheme)
+
+    var isRoot by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -146,15 +121,17 @@ public fun LeapSdkScreen(
             },
             onBack = { activity?.finish() },
             showBackButton = true,
-            onBackStackChanged = onBackStackChanged,
+            onBackStackChanged = { isRootState, _ -> isRoot = isRootState }
         )
 
-        DemoFloatingButton(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            buttonText = stringResource(R.string.navigate_to_screen_two),
-            onClick = onNavigateToScreenTwo,
-        )
+        if (isRoot && deeplinkPath.isNullOrEmpty() && activity?.intent?.data == null) {
+            DemoFloatingButton(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp),
+                buttonText = stringResource(R.string.navigate_to_screen_two),
+                onClick = onNavigateToScreenTwo,
+            )
+        }
     }
 }
