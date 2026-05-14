@@ -169,8 +169,6 @@ public fun MainScreen() {
 
             StartSdkButton(context)
 
-            StartComposeSdkButton(context)
-
             LogoutButton(isUserLogged) {
                 LeapMobileSDK.track(ButtonClickEvent(buttonName = "Logout", screenName = "MainActivity"))
                 coroutineScope.launch {
@@ -289,21 +287,6 @@ private fun StartSdkButton(context: Context) {
         // Track Start SDK button click
         LeapMobileSDK.track(
             ButtonClickEvent(buttonName = "Start SDK", screenName = "MainActivity")
-        )
-        context.startActivity(
-            Intent(context, SdkActivity::class.java)
-        )
-    }
-}
-
-@Composable
-private fun StartComposeSdkButton(context: Context) {
-    DemoButtons(
-        buttonText = stringResource(R.string.start_compose_sdk)
-    ) {
-        // Track Start SDK button click
-        LeapMobileSDK.track(
-            ButtonClickEvent(buttonName = "Start Compose Navigation SDK", screenName = "MainActivity")
         )
         context.startActivity(
             Intent(context, SdkComposeNavigationActivity::class.java)

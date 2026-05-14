@@ -66,41 +66,29 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.material)
 
+    implementation(libs.leapmobilesdk.core)
+    // Fanatics bundle (same version as mobile-sdk-core). Remove if the app provides assets under content/ itself.
+    implementation(libs.leapmobilesdk.fanaticsBundle)
+    implementation(libs.qrScanner)
+
     // Compose UI dependencies
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.material)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.activity)
     implementation(libs.compose.fragment)
+    implementation(libs.compose.navigation)
     implementation(libs.compose.lifecycleViewModel)
     implementation(libs.androidx.appCompat)
 
-
-    // Leap Mobile SDK
-    implementation(libs.leapmobilesdk)
-    implementation(libs.qrScanner)
-    implementation(libs.kiba.parsimonious)
-
-    // SDKs needed to make the app properly run
-    implementation(libs.retrofit)
-    implementation(libs.retrofitSerializationConverter)
-    implementation(libs.okHttp)
-    implementation(libs.okHttpLoggingInterceptor)
-    implementation(libs.androidx.security)
-    implementation(libs.androidx.datastore)
-    implementation(libs.androidx.work)
-    implementation(libs.androidx.recyclerView)
-    implementation(libs.kotlinReflect)
-    implementation(libs.zip4j)
-    implementation(libs.komposable)
-    implementation(libs.zxing)
-    implementation(libs.fuzzywuzzy)
-    implementation(libs.sharpSVG)
-	implementation(libs.androidx.webkit)
+    // Webkit
+    implementation(libs.androidx.webkit)
 
 	// Compose UI testing
 	androidTestImplementation(platform(libs.compose.bom))

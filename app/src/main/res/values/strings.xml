@@ -16,7 +16,6 @@
     <string name="authentication_webview">Authentication WebView</string>
     <string name="open_bottom_sheet_sampleapp">Open Bottom Sheet (sampleapp)</string>
     <string name="start_sdk">Start SDK</string>
-    <string name="start_compose_sdk">Start Compose Navigation SDK</string>
 
     <!-- DeepLinkActivity -->
     <string name="deep_link_tests">Deeplink Tests</string>
@@ -30,4 +29,13 @@
     <string name="registration">Registration</string>
     <string name="badges">Badges</string>
     <string name="invalid">Invalid</string>
+
+    <!-- SdkComposeNavigationActivity (mirrors sample app) -->
+    <string name="navigate_to_screen_two">Navigate to Screen Two</string>
+    <string name="sdk_depth_format">SDK depth: %1$d | isAtRoot: %2$s</string>
+
+    <!-- ScreenTwo -->
+    <string name="screen_two_title">Screen Two</string>
+    <string name="screen_two_description">This simulates navigating away from the SDK screen.\nPress back to return and verify SDK content restores.</string>
+    <string name="go_back_to_sdk">Go Back to SDK</string>
 </resources>
