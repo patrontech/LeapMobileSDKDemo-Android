@@ -46,39 +46,18 @@ allprojects {
 
 ### App module — required dependencies
 
-These are the imports (dependencies) used by the app and the Leap Mobile SDK. In `app/build.gradle.kts` use the full Maven coordinates:
+These are the imports (dependencies) used by the app and the Leap Mobile SDK. In `app/build.gradle.kts` use the version catalog aliases:
 
 ```kotlin
 dependencies {
-    // Leap Mobile SDK
-    implementation("tech.leapevent:mobile-sdk:{{ latest version }}")
+    // Leap Mobile SDK — core
+    implementation("tech.leapevent:mobile-sdk-core:{{ latest version }}")
+    // Fanatics bundle (same version as mobile-sdk-core). Remove if the app provides assets under content/ itself.
+    implementation("tech.leapevent:mobile-sdk-fanatics-bundle:{{ latest version }}")
     // Code Scanner library
     implementation("com.code-scanner:library:{{ latest version }}")
 }
 ```
-
----
-
-## Assets / Initial content
-
-Runtime content lives under `app/src/main/assets/content/`. This content, including images, must be bundled with the app to ensure offline support.
-
-- We'll provide the necessary files for the initial setup.
-- Note that the **X** is the version number:
-- Place **`content_vX.zip`** and **`runConfig.json`** in a folder called **`content`** in the assets folder:
-   ```
-   app/src/main/assets/content/
-   ```
-- Unzip **`images_full_vX.zip`** into a folder called **`Assets`** inside the content folder:
-   ```
-   app/src/main/assets/content/Assets/
-   ```
-   The password for the zip file is **`images_full_vX<secret>zip`**, where **`<secret>`** is the value of the `secret` field in `runConfig.json`.
-
-- **`runConfig.json`** — config used by the app/SDK (e.g. content version, project id, schema).
-- Other assets in `content/` (e.g. images, zips) are referenced by this config.
-
-Ensure `runConfig.json` exists and matches the format expected by the app. The deeplink **scheme** used in the app (e.g. `fanaticssdkstaging`) should be consistent with your project/backend; the sample manifest uses this scheme for the SDK Activity.
 
 ---
 
