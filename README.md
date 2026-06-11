@@ -30,16 +30,6 @@ allprojects {
                 password = {{ githubToken }}
             }
         }
-
-        // Code Scanner library
-        maven {
-            url = uri("https://maven.pkg.github.com/patrontech/code-scanner/")
-            credentials {
-                username = {{ githubUser }}
-                password = {{ githubToken }}
-            }
-
-        }
     }
 }
 ```
@@ -54,8 +44,6 @@ dependencies {
     implementation("tech.leapevent:mobile-sdk-core:{{ latest version }}")
     // Fanatics bundle (same version as mobile-sdk-core). Remove if the app provides assets under content/ itself.
     implementation("tech.leapevent:mobile-sdk-fanatics-bundle:{{ latest version }}")
-    // Code Scanner library
-    implementation("com.code-scanner:library:{{ latest version }}")
 }
 ```
 
