@@ -99,6 +99,16 @@ In case you initialized the SDK into your Application class, point the app to yo
 
 Use your own package path if different (e.g. `.AppHostApplication` if it lives in the root package).
 
+### Map feature (Google Maps)
+
+If the SDK configuration includes the Map feature, you must provide a Google Maps API Key in your `AndroidManifest.xml` inside the `<application>` tag:
+
+```xml
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_API_KEY_HERE" />
+```
+
 ### SDK Activity and deeplink scheme
 
 Register the Activity that will host the SDK. If you want the system (and external apps) to route deeplinks to this Activity automatically, add an `<intent-filter>` for your custom scheme:
@@ -349,6 +359,33 @@ LeapMobileSDK.initialize(
     metrics = MyAnalyticsProvider()
 )
 ```
+
+---
+
+## User Session Management
+
+### Logout
+
+When a user logs out of your host application, you must also call `LeapMobileSDK.logout()` to ensure the SDK clears any stored session data, JWTs, and cookies.
+
+```kotlin
+/**
+ * Detaches the current registration (logout). Clears JWT, session, badges, and cookies,
+ * then updates the root layout so conditions run again.
+ */
+suspend fun logout()
+```
+
+Since `logout()` is a suspending function, you should call it from a coroutine scope:
+
+```kotlin
+lifecycleScope.launch {
+    LeapMobileSDK.logout()
+    // Perform your app's logout logic
+}
+```
+
+---
 
 ## Logging & Health Monitoring
 
