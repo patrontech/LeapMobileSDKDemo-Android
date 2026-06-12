@@ -69,7 +69,6 @@ dependencies {
     implementation(libs.leapmobilesdk.core)
     // Fanatics bundle (same version as mobile-sdk-core). Remove if the app provides assets under content/ itself.
     implementation(libs.leapmobilesdk.fanaticsBundle)
-    implementation(libs.qrScanner)
 
     // Compose UI dependencies
     implementation(platform(libs.compose.bom))

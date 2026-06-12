@@ -120,7 +120,7 @@ public fun LeapSdkScreen(
                 }
             },
             onBack = { activity?.finish() },
-            showBackButton = true,
+            showBackButton = false,
             onBackStackChanged = { isRootState, _ -> isRoot = isRootState }
         )
 
