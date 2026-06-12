@@ -45,11 +45,10 @@ fuzzywuzzy = "1.4.0"
 room = "2.6.1"
 okHttp = "4.12.0"
 retrofit = "2.11.0"
-qrScanner = "2.1.0"
 ui = "1.10.1"
 zip4j = "2.9.0"
 zxing = "3.4.1"
-leapmobilesdk = "1.0.0"
+leapmobilesdk = "1.0.2"
 materialVersion = "1.10.1"
 
 # UI
@@ -150,7 +149,6 @@ serializationJson = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializa
 serializationCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
 kiba-parsimonious = { group = "com.greencopper", name = "parsimonious", version.ref = "kiba-parsimonious" }
 fuzzywuzzy = { group = "com.greencopper", name = "fuzzywuzzy", version.ref = "fuzzywuzzy" }
-qrScanner = { group = "com.code-scanner", name = "library", version.ref = "qrScanner" }
 zip4j = { group = "net.lingala.zip4j", name = "zip4j", version.ref = "zip4j" }
 zxing = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
 
