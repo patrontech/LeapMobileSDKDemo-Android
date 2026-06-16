@@ -85,6 +85,16 @@ public class SdkComposeNavigationActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        LeapMobileSDK.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LeapMobileSDK.pause()
+    }
 }
 
 @Composable

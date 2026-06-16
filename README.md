@@ -84,6 +84,31 @@ Without this, SDK APIs used in your host Activity (for example `SdkActivity` or 
 
 ---
 
+### OTA Processing
+```kotlin
+fun resume()
+fun pause()
+```
+
+- Call these functions during onResume/onPause of the hosting activity/fragment/component to trigger OTA updates.
+- These updates happen in the background and content is automatically applied to the RootLayout flow.
+
+```kotlin
+class HostActivity : Activity() {
+    override fun onResume() {
+        super.onResume()
+        LeapMobileSDK.resume()
+    }
+    
+    override fun onPause() {
+        super.onPause()
+        LeapMobileSDK.pause()
+    }
+}
+```
+
+---
+
 ## AndroidManifest
 
 ### Application class
